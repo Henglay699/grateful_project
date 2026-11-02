@@ -1,0 +1,65 @@
+/* Page search: one bordered box with the icon inside (like the top-bar search); the box
+   highlights on focus instead of the input getting a second outline ring. */
+.box {
+  /* A real width (not just flex-basis) so header toolbars size to fit it on one line. */
+  width: 240px;
+  flex: 0 1 auto;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-canvas);
+  cursor: text;
+  transition: border-color 0.15s ease;
+}
+.box:hover:not(:focus-within) {
+  border-color: var(--border-strong);
+}
+.box:focus-within {
+  border-color: var(--accent-primary);
+}
+.box input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.box input:focus-visible {
+  outline: none;
+}
+.box input::placeholder {
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.box svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--text-tertiary);
+}
+.box:focus-within svg {
+  color: var(--accent-primary);
+}
+
+/* Takes the toolbar's free width, from beside the title up to the other controls. */
+.grow {
+  flex: 1 1 240px;
+  width: auto;
+}
+
+@media (max-width: 640px) {
+  .box {
+    flex: 1 1 100%;
+  }
+}

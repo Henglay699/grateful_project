@@ -1,0 +1,581 @@
+[
+  {
+    "key": "import_sih",
+    "label": "I. IMPORT SIH PORT & DRYPORT",
+    "docTitle": "Import Clearance Quotation (By Sea) (Tax Exemption) 進口報關費（海運）",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "c20",
+        "label": "20'GP",
+        "type": "num"
+      },
+      {
+        "key": "c40",
+        "label": "40'H",
+        "type": "num"
+      },
+      {
+        "key": "lcl",
+        "label": "LCL",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      [
+        "TRUCKING FEE 拖車費",
+        "USD",
+        "280.00",
+        "360.00",
+        "60.00",
+        "If from Dry port $60/1.5T Truck, or $80/2.5T Truck, or $110/5T Truck. If from SIH: -$13/CBM+$50/Truck, or $40/Ton+$50/Truck, or Min $30/CBM+$50/Truck"
+      ],
+      [
+        "IMPORT PROCESSING FEE 報關費",
+        "USD",
+        "180.00",
+        "200.00",
+        "150.00",
+        "櫃 Per CTNR or LCL Per set"
+      ],
+      [
+        "HANDLING FEE 服務費",
+        "USD",
+        "35.00",
+        "35.00",
+        "35.00",
+        "櫃 Per CTNR, or LCL散貨: /批 Per Shpt"
+      ],
+      ["PERMIT FEE", "USD", "45.00", "45.00", "45.00", "Express permit fee US$55"],
+      ["MISSING INSURANCE 無正本保險單", "USD", "20.00", "20.00", "20.00", ""],
+      [
+        "FUEL SURCHARGE",
+        "USD",
+        "30.00",
+        "50.00",
+        "5/10/15",
+        "LCL per 1.5T/2.5T/5T truck or $2/CBM or $5/T"
+      ],
+      ["RETURN EMPTY", "USD", "50.00", "50.00", "", ""],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "25.00", "Per set/CTNR"],
+      ["THC FEE", "USD", "As per receipt", "As per receipt", "As per receipt", ""],
+      [
+        "CUSTOMS PROCESSING FEE 海關手續費",
+        "USD",
+        "As per receipt",
+        "As per receipt",
+        "As per receipt",
+        ""
+      ],
+      ["LOLO PORT", "USD", "As per receipt", "As per receipt", "As per receipt", ""],
+      ["SCAN FEE", "USD", "As per receipt", "As per receipt", "As per receipt", ""]
+    ],
+    "notes": "1 - Additional declaration 附加報關單: US$55/Set, Additional CPF 附加海關手續費: US$10/declaration\n2 - Max weight 12T/20' & 21T/40'; if 20' >12T, trucking fee charged as 40' rate\n3 - Overweight charge, if over 21T: US$50/Ton or case by case, max 26T\n4 - RED SIGNAL 解決海關系統顯示紅燈: US$40/shipment\n5 - TRUCK STAND BY 滯車費: US$70/truck/night 24 hour",
+    "sortOrder": 0
+  },
+  {
+    "key": "import_pnh",
+    "label": "I. IMPORT PNH PORT",
+    "docTitle": "Import Clearance Quotation (By Sea) (Tax Exemption) 進口報關費（海運）",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "c20",
+        "label": "20'GP",
+        "type": "num"
+      },
+      {
+        "key": "c40",
+        "label": "40'H",
+        "type": "num"
+      },
+      {
+        "key": "lcl",
+        "label": "LCL",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      [
+        "TRUCKING FEE 拖車費",
+        "USD",
+        "250.00",
+        "260.00",
+        "150.00",
+        "LCL per 2T truck (max 12CBM 2T)"
+      ],
+      [
+        "IMPORT PROCESSING FEE 報關費",
+        "USD",
+        "200.00",
+        "230.00",
+        "160.00",
+        "櫃 Per CTNR or LCL Per set"
+      ],
+      [
+        "HANDLING FEE 服務費",
+        "USD",
+        "35.00",
+        "35.00",
+        "35.00",
+        "櫃 Per CTNR, or LCL散貨: /批 Per Shpt"
+      ],
+      ["PERMIT FEE", "USD", "45.00", "45.00", "45.00", "Express permit fee US$55"],
+      ["MISSING INSURANCE 無正本保險單", "USD", "20.00", "20.00", "20.00", ""],
+      [
+        "FUEL SURCHARGE",
+        "USD",
+        "30.00",
+        "40.00",
+        "5/10/15",
+        "LCL per 1.5T/2.5T/5T truck or $2/CBM or $5/T"
+      ],
+      ["RETURN EMPTY", "USD", "50.00", "50.00", "", ""],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "25.00", "Per set/CTNR"],
+      ["THC FEE", "USD", "As per receipt", "As per receipt", "As per receipt", ""],
+      [
+        "CUSTOMS PROCESSING FEE 海關手續費",
+        "USD",
+        "As per receipt",
+        "As per receipt",
+        "As per receipt",
+        ""
+      ],
+      ["LOLO PORT", "USD", "As per receipt", "As per receipt", "As per receipt", ""],
+      ["SCAN FEE", "USD", "As per receipt", "As per receipt", "As per receipt", ""]
+    ],
+    "notes": "1 - Additional declaration 附加報關單: US$55/Set, Additional CPF 附加海關手續費: US$10/declaration\n2 - Max weight 12T/20' & 21T/40'; if 20' >12T, trucking fee charged as 40' rate\n3 - Overweight charge, if over 21T: US$50/Ton or case by case, max 26T\n4 - RED SIGNAL 解決海關系統顯示紅燈: US$40/shipment\n5 - TRUCK STAND BY 滯車費: US$70/truck/night 24 hour",
+    "sortOrder": 1
+  },
+  {
+    "key": "export_pnh",
+    "label": "I. EXPORT PNH PORT 金邊港",
+    "docTitle": "Export Clearance Quotation (FCL) By Sea (Tax Exemption) 出口報關費",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "c20",
+        "label": "20'GP",
+        "type": "num"
+      },
+      {
+        "key": "c40",
+        "label": "40'H",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      ["TRUCKING FEE 拖車費", "USD", "250.00", "260.00", "/櫃 Per CTNR"],
+      ["EXPORT PROCESSING FEE 出口報關費", "USD", "213.00", "242.00", "/櫃 Per CTNR"],
+      ["HANDLING FEE 服務費", "USD", "35.00", "35.00", "/櫃 Per CTNR"],
+      ["FUEL SURCHARGE", "USD", "30.00", "40.00", ""],
+      ["PETROL ALLOWANCE FEE", "USD", "69.00", "69.00", "Per times"],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "Per set/CTNR"],
+      ["SERVICE TAXATION", "USD", "20.00", "20.00", "Shipment"],
+      ["LOLO EMPTY 空櫃吊掛費", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"],
+      ["LOLO PORT 碼頭吊掛費", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"],
+      ["CUSTOMS PROCESSING FEE", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"]
+    ],
+    "notes": "1 - Apply CO 申請產地證 US$40/set, EQMC as per receipt, enter stock US$10/set\n2 - Inspection overtime 驗貨加班: US$80/container; overtime at port US$60/CTNR (PNH), if any\n3 - Document overtime 文件加班: US$80/Set (add US$34.5/CTNR from 2nd CTNR onward), if any\n4 - Extra declaration 附加報關單: US$55/Set (PNH), extra processing fee US$10/Set, if any\n5 - Cancelling truck charge: one-time trucking fee/container (or case by case)\n6 - Lo/lo empty for cancel/change container: US$30/20', US$40/40', if any\n7 - Overweight charge, if over 21T: US$50/Ton or case by case, max 26T\n8 - Handling fee for late container to shipping line (TBA)\n9 - RED SIGNAL 解決海關系統顯示紅燈: US$40/shipment\n10 - TRUCK STAND BY 滯車費: US$70/truck/night 24 hour\n11 - Custom handling fee for loading at another factory, extra trucking fee (case by case), if any\n12 - LOCK SEAL Dryport 乾碼頭驗貨費: US$57.50/cont",
+    "sortOrder": 2
+  },
+  {
+    "key": "export_shv",
+    "label": "I. EXPORT SHV PORT 西港",
+    "docTitle": "Export Clearance Quotation (By Sea) (Tax Exemption) 出口報關費（海運）",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "c20",
+        "label": "20'GP",
+        "type": "num"
+      },
+      {
+        "key": "c40",
+        "label": "40'H",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      ["TRUCKING FEE 拖車費", "USD", "270.00", "280.00", "/櫃 Per CTNR"],
+      ["EXPORT PROCESSING FEE 出口報關費", "USD", "215.00", "245.00", "/櫃 Per CTNR"],
+      ["HANDLING FEE 服務費", "USD", "35.00", "35.00", "/櫃 Per CTNR"],
+      ["FUEL SURCHARGE", "USD", "30.00", "40.00", ""],
+      ["PETROL ALLOWANCE FEE", "USD", "69.00", "69.00", "Per times"],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "Per times"],
+      ["SERVICE TAXATION", "USD", "20.00", "20.00", "Shipment"],
+      ["LOLO EMPTY 空櫃吊掛費", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"],
+      ["LOLO PORT 碼頭吊掛費", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"],
+      ["CUSTOMS PROCESSING FEE", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"]
+    ],
+    "notes": "1 - Apply CO 申請產地證 US$40/set, EQMC as per receipt, enter stock US$10/set\n2 - Inspection overtime 驗貨加班: US$80/container; overtime at port US$30/CTNR (SIH), if any\n3 - Document overtime 文件加班: US$80/Set (add US$34.5/CTNR from 2nd CTNR onward), if any\n4 - Extra declaration 附加報關單: US$55/Set, extra processing fee US$10/Set, if any\n5 - Cancelling truck charge: one-time trucking fee/container (or case by case)\n6 - Lo/lo empty for cancel/change container: US$30/20', US$40/40', if any\n7 - Overweight charge, if over 21T: US$50/Ton or case by case, max 26T\n8 - Handling fee for late container to shipping line (TBA)\n9 - RED SIGNAL 解決海關系統顯示紅燈: US$40/shipment\n10 - TRUCK STAND BY 滯車費: US$70/truck/night 24 hour\n11 - Lo/Lo at port 碼頭吊掛費 /份 Per Set\n12 - Custom handling fee for loading at another factory, extra trucking fee (case by case), if any\n13 - LOCK SEAL Dryport 乾碼頭驗貨費: US$57.50/cont",
+    "sortOrder": 3
+  },
+  {
+    "key": "export_bavet",
+    "label": "I. EXPORT BAVET",
+    "docTitle": "Export Clearance Quotation (By Sea) (Tax Exemption) 出口報關費（海運）",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "c20",
+        "label": "20'GP",
+        "type": "num"
+      },
+      {
+        "key": "c40",
+        "label": "40'H",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      ["TRUCKING FEE 拖車費", "USD", "", "420.00", "/櫃 Per CTNR"],
+      ["EXPORT PROCESSING FEE 出口報關費", "USD", "213.00", "330.00", "/櫃 Per CTNR"],
+      ["HANDLING FEE 服務費", "USD", "35.00", "35.00", "/櫃 Per CTNR"],
+      ["FUEL SURCHARGE", "USD", "30.00", "40.00", ""],
+      ["PETROL ALLOWANCE FEE", "USD", "69.00", "69.00", "Per times"],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "Per set/CTNR"],
+      ["SERVICE TAXATION", "USD", "20.00", "20.00", "Shipment"],
+      ["LOLO EMPTY 空櫃吊掛費", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"],
+      ["LOLO PORT 碼頭吊掛費", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"],
+      ["CUSTOMS PROCESSING FEE", "USD", "As per receipt", "As per receipt", "/櫃 Per CTNR"]
+    ],
+    "notes": "1 - Apply CO 申請產地證 US$40/set, EQMC as per receipt, enter stock US$10/set\n2 - Inspection overtime 驗貨加班: US$80/container, if any\n3 - Document overtime 文件加班: US$80/Set (add US$34.5/CTNR from 2nd CTNR onward), if any\n4 - Extra declaration 附加報關單: US$55/Set, extra processing fee US$10/Set, if any\n5 - Overweight charge, if over 21T: US$50/Ton or case by case, max 26T\n6 - RED SIGNAL 解決海關系統顯示紅燈: US$40/shipment\n7 - TRUCK STAND BY 滯車費: US$70/truck/night 24 hour\n8 - LOCK SEAL Dryport 乾碼頭驗貨費: US$57.50/cont",
+    "sortOrder": 4
+  },
+  {
+    "key": "dryport_lcl",
+    "label": "I. DRYPORT — LCL TRUCKING",
+    "docTitle": "LCL To Dryport",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "t15",
+        "label": "1.5T",
+        "type": "num"
+      },
+      {
+        "key": "t25",
+        "label": "2.5T",
+        "type": "num"
+      },
+      {
+        "key": "t5",
+        "label": "5T",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [["TRUCKING FEE 拖車費", "USD", "60.00", "90.00", "140.00", "/拖車 Per truck"]],
+    "notes": "1 - Truck stand by 5 hour\n2 - Fuel surcharge $5/10/15 if LCL per 1.5T/2.5T/5T truck\n3 - Document fee US$25/set\n4 - Handling fee US$35/set\n5 - Warehouse charge as per receipt\n6 - Service taxation fee US$20/shipment",
+    "sortOrder": 5
+  },
+  {
+    "key": "export_air",
+    "label": "I. EXPORT AIRPORT-TECHO 工廠 - 德崇機場 (出口)",
+    "docTitle": "Air Clearance Quotation",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "w500",
+        "label": "-500K",
+        "type": "num"
+      },
+      {
+        "key": "w1000",
+        "label": "-1000K",
+        "type": "num"
+      },
+      {
+        "key": "w2000",
+        "label": "-2000K",
+        "type": "num"
+      },
+      {
+        "key": "w3000",
+        "label": "-3000K",
+        "type": "num"
+      },
+      {
+        "key": "w5000",
+        "label": "-5000K",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      [
+        "TRUCKING FEE 拖車費",
+        "USD",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "$90/1.5T truck (max 6CBM) or $110/2.5T truck (max 12CBM)"
+      ],
+      [
+        "EXPORT PROCESSING FEE 出口報關費",
+        "USD",
+        "120.00",
+        "130.00",
+        "150.00",
+        "160.00",
+        "180.00",
+        "/份 Per set (+5000kg add US$10/t)"
+      ],
+      [
+        "INSPECTION FEE 檢驗費",
+        "USD",
+        "25.00",
+        "25.00",
+        "25.00",
+        "25.00",
+        "25.00",
+        "/批 Per shipment"
+      ],
+      [
+        "HANDLING FEE 服務費",
+        "USD",
+        "35.00",
+        "35.00",
+        "35.00",
+        "35.00",
+        "35.00",
+        "/批 Per shipment"
+      ],
+      [
+        "FUEL SURCHARGE",
+        "USD",
+        "5/10/15",
+        "5/10/15",
+        "5/10/15",
+        "5/10/15",
+        "5/10/15",
+        "LCL per 1.5T/2.5T/5T truck"
+      ],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "25.00", "25.00", "25.00", "Per set"],
+      ["SERVICE TAXATION", "USD", "20.00", "20.00", "20.00", "20.00", "20.00", "Shipment"],
+      [
+        "CUSTOMS PROCESSING FEE 海關手續費",
+        "USD",
+        "13.75",
+        "13.75",
+        "13.75",
+        "13.75",
+        "13.75",
+        "/批 Per shipment"
+      ]
+    ],
+    "notes": "1 - Storage charge 倉租費: US$0.044/kg/1-3 days; from 4th day US$0.088/kg/day (min 50kg)\n2 - Overtime charge 加班費: US$120/declaration if clearance finished before 8PM (after 8PM case by case), if any\n3 - Trucking detention 滯車費: one-time trucking fee every 4h, counted from loading till unloading, if any\n4 - Extra declaration fee 附加報關費: US$80.5/declaration; extra CPF 附加海關手續費: US$10/declaration, if any\n5 - GW on INV/PL vs GW at airport cannot differ 5% or more, or US$100/set custom penalty\n6 - Apply CO 申請產地證 US$40/set, EQMC as per receipt, enter stock US$10/set",
+    "sortOrder": 6
+  },
+  {
+    "key": "import_air",
+    "label": "I. IMPORT AIRPORT-TECHO 工廠 - 德崇機場 (進口)",
+    "docTitle": "Air Clearance Quotation",
+    "columns": [
+      {
+        "key": "desc",
+        "label": "Description",
+        "type": "wide"
+      },
+      {
+        "key": "ccy",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "w500",
+        "label": "-500K",
+        "type": "num"
+      },
+      {
+        "key": "w1000",
+        "label": "-1000K",
+        "type": "num"
+      },
+      {
+        "key": "w2000",
+        "label": "-2000K",
+        "type": "num"
+      },
+      {
+        "key": "w3000",
+        "label": "-3000K",
+        "type": "num"
+      },
+      {
+        "key": "w5000",
+        "label": "-5000K",
+        "type": "num"
+      },
+      {
+        "key": "remark",
+        "label": "Remark",
+        "type": "remark"
+      }
+    ],
+    "defaultRows": [
+      [
+        "TRUCKING FEE 拖車費",
+        "USD",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "$90/1.5T truck (max 6CBM) or $110/2.5T truck (max 12CBM)"
+      ],
+      [
+        "IMPORT PROCESSING FEE 報關費",
+        "USD",
+        "130.00",
+        "140.00",
+        "160.00",
+        "170.00",
+        "190.00",
+        "/份 Per set (+5000kg add US$10/t)"
+      ],
+      [
+        "HANDLING FEE 服務費",
+        "USD",
+        "35.00",
+        "35.00",
+        "35.00",
+        "35.00",
+        "35.00",
+        "/批 Per shipment"
+      ],
+      [
+        "PERMIT FEE",
+        "USD",
+        "45.00",
+        "45.00",
+        "45.00",
+        "45.00",
+        "45.00",
+        "Express permit fee US$55"
+      ],
+      [
+        "FUEL SURCHARGE",
+        "USD",
+        "5/10/15",
+        "5/10/15",
+        "5/10/15",
+        "5/10/15",
+        "5/10/15",
+        "LCL per 1.5T/2.5T/5T truck"
+      ],
+      ["DOCUMENT FEE", "USD", "25.00", "25.00", "25.00", "25.00", "25.00", "Per set"],
+      [
+        "CUSTOMS PROCESSING FEE 海關手續費",
+        "USD",
+        "13.75",
+        "13.75",
+        "13.75",
+        "13.75",
+        "13.75",
+        "/批 Per shipment"
+      ]
+    ],
+    "notes": "1 - Storage charge: US$0.088/kg/1-6 days; from 7th day US$0.044/kg/day (min 50kg)\n2 - Overtime charge 加班費: US$120/declaration if clearance finished before 8PM (after 8PM case by case), if any\n3 - Clearance with deposit money 押金提貨: US$30/shipment\n4 - GW on INV/PL vs GW at airport cannot differ 5% or more, or US$100/set custom penalty",
+    "sortOrder": 7
+  }
+]

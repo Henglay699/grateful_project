@@ -1,0 +1,1 @@
+ALTER TABLE "suppliers" ADD COLUMN "hidden" boolean DEFAULT false NOT NULL;

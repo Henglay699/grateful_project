@@ -1,0 +1,107 @@
+/* Summary tiles (Monthly Ledger, Cut Stock): small uppercase label over a bold value. */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  gap: 10px;
+  margin: 12px 0 14px;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  text-align: left;
+  font-family: var(--font-main);
+}
+.label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.value {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile[data-tone] {
+  border-color: transparent;
+}
+.tile[data-tone='success'] {
+  background: var(--status-completed-bg);
+}
+.tile[data-tone='success'] .value {
+  color: var(--status-completed-fg);
+}
+.tile[data-tone='info'] {
+  background: var(--status-progress-bg);
+}
+.tile[data-tone='info'] .value {
+  color: var(--status-progress-fg);
+}
+.tile[data-tone='paid'] {
+  background: var(--status-paid-bg);
+}
+.tile[data-tone='paid'] .value {
+  color: var(--status-paid-fg);
+}
+.tile[data-tone='warning'] {
+  background: var(--status-pending-bg);
+}
+.tile[data-tone='warning'] .value {
+  color: var(--status-pending-fg);
+}
+.tile[data-tone='danger'] {
+  background: var(--status-exception-bg);
+}
+.tile[data-tone='danger'] .value {
+  color: var(--status-exception-fg);
+}
+.tile[title] {
+  cursor: help;
+}
+
+/* Clickable tiles toggle a filter. */
+.tile.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  border-color: var(--border-strong);
+}
+.clickable[aria-pressed='true'] {
+  border-color: currentColor;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+.clickable[aria-pressed='true'] {
+  color: var(--accent-primary);
+}
+.clickable[data-tone='warning'][aria-pressed='true'] {
+  color: var(--status-pending-fg);
+}
+.clickable[data-tone='danger'][aria-pressed='true'] {
+  color: var(--status-exception-fg);
+}
+
+@media (max-width: 1200px) {
+  .tiles {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

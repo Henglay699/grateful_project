@@ -1,0 +1,209 @@
+/* A4 document, printed in black on white regardless of the app theme. */
+.page {
+  --ink: #111827;
+  --line: #9ca3af;
+  min-height: 100vh;
+  width: 100%;
+  background: #e5e7eb;
+  padding: 24px 12px 60px;
+  font-family: 'GS Khmer', 'Helvetica', Arial, sans-serif;
+  color: var(--ink);
+}
+.toolbar {
+  max-width: 210mm;
+  margin: 0 auto 12px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.btn {
+  font: 700 13px/1 inherit;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  cursor: pointer;
+}
+.btnPrimary {
+  composes: btn;
+  background: #0891b2;
+  border-color: #0891b2;
+  color: #fff;
+}
+.sheet {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: #fff;
+  padding: 14mm 14mm 16mm;
+  box-shadow: 0 6px 30px rgba(15, 23, 42, 0.18);
+  font-size: 10.5px;
+  line-height: 1.45;
+  overflow: hidden;
+}
+.km {
+  font-family: 'GS Khmer', 'Helvetica', sans-serif;
+}
+.head {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+.logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+.company {
+  flex: 1;
+}
+.companyKm {
+  composes: km;
+  font-size: 15px;
+  font-weight: 700;
+}
+.companyEn {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.companyMeta {
+  font-size: 9.5px;
+  color: #374151;
+}
+.title {
+  text-align: center;
+  margin: 6px 0 12px;
+}
+.titleKm {
+  composes: km;
+  font-size: 16px;
+  font-weight: 700;
+}
+.titleEn {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 6px 20px;
+  margin-bottom: 12px;
+}
+.kv {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 3px 8px;
+  align-content: start;
+}
+.kv dt {
+  font-weight: 700;
+  white-space: nowrap;
+}
+.kv dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4px;
+}
+.table th,
+.table td {
+  border: 1px solid var(--line);
+  padding: 5px 6px;
+  vertical-align: top;
+}
+.table th {
+  background: #f3f4f6;
+  font-weight: 700;
+  text-align: center;
+  font-size: 9.5px;
+}
+.num {
+  text-align: right;
+  white-space: nowrap;
+}
+.center {
+  text-align: center;
+}
+.totals {
+  margin-left: auto;
+  margin-top: 8px;
+  border-collapse: collapse;
+  min-width: 58%;
+}
+.totals td {
+  border: 1px solid var(--line);
+  padding: 5px 8px;
+}
+.totals .grand td {
+  font-weight: 700;
+  background: #f3f4f6;
+}
+.note {
+  margin-top: 14px;
+  font-size: 9.5px;
+}
+.signs {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 46px;
+  font-size: 9.5px;
+  text-align: center;
+}
+.signs > div {
+  flex: 1;
+  border-top: 1px solid var(--ink);
+  padding-top: 6px;
+}
+.stamp {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-24deg);
+  font-size: 92px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: rgba(220, 38, 38, 0.14);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.checkbox {
+  font-weight: 700;
+  margin-right: 14px;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  .page {
+    background: #fff;
+    padding: 0;
+  }
+  /* A sheet shorter than the page (statements, receipts, checklist) ends where its content
+     does; below it the paper must stay white, not the app's tinted page background, which
+     prints when "Background graphics" is on. */
+  :global(html),
+  :global(body),
+  :global(#root) {
+    background: #fff !important;
+  }
+  .toolbar {
+    display: none;
+  }
+  .sheet {
+    box-shadow: none;
+    margin: 0;
+  }
+}

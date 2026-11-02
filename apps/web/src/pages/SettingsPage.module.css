@@ -1,0 +1,46 @@
+/* List tabs fill the window: the tabs, card header, add row and column headers stay put and
+   only the table rows scroll. Small screens keep normal page scrolling. */
+.tableScroll {
+  overflow: auto;
+}
+/* A port row being edited: inputs fill their cells. */
+.editRow td {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  vertical-align: middle;
+}
+.editRow input,
+.editRow select {
+  width: 100%;
+  min-width: 80px;
+}
+.tableScroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 1px 0 0 var(--border-subtle);
+}
+
+@media (min-width: 900px) and (min-height: 600px) {
+  :global(.content):has(> .fill) {
+    display: flex;
+    flex-direction: column;
+  }
+  :global(.view.active).fill {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .fill > :global(.card) {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .tableScroll {
+    flex: 1;
+    min-height: 0;
+  }
+}

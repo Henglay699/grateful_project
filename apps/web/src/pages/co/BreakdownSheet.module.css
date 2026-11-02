@@ -1,0 +1,181 @@
+/* The GSP breakdown on A4 portrait pages, black on white regardless of the app theme. */
+.sheets {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 14mm 14mm 16mm;
+  background: #fff;
+  color: #000;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 10.5pt;
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.18);
+}
+.letterhead {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.letterhead h1 {
+  margin: 0 0 2px;
+  font-size: 18pt;
+  font-weight: 700;
+}
+.letterhead p {
+  margin: 0;
+  font-size: 11pt;
+}
+.title {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 12pt;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.facts {
+  display: grid;
+  grid-template-columns: 52mm 1fr;
+  gap: 3px 6px;
+  margin: 0 0 14px;
+}
+.facts dt,
+.facts dd {
+  margin: 0;
+}
+.factDate {
+  margin-left: 40mm;
+}
+.arial {
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+}
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.grid th,
+.grid td {
+  border: 0.5pt solid #000;
+  padding: 3px 5px;
+  overflow-wrap: anywhere;
+}
+.grid th {
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+.grid tr {
+  break-inside: avoid;
+}
+.c {
+  text-align: center;
+}
+.r {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.band {
+  font-weight: 700;
+}
+.fob td {
+  font-weight: 700;
+}
+.importLine {
+  margin: 4px 0 0;
+}
+.signs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 26px;
+  break-inside: avoid;
+}
+.signs > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.signName {
+  margin-top: 70px;
+  font-size: 10pt;
+  font-weight: 700;
+}
+.section {
+  margin: 16px 0 8px;
+  font-size: 10.5pt;
+  font-weight: 400;
+  line-height: 1.35;
+}
+.page .grid {
+  font-size: 9.5pt;
+}
+.totalLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 8px 0 4px;
+  font-size: 10pt;
+}
+.totalLine b {
+  white-space: nowrap;
+}
+.items {
+  margin: 18px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.items li {
+  padding-left: 4px;
+}
+.items li > span {
+  display: inline-block;
+  width: calc(100% - 42mm);
+  vertical-align: top;
+}
+.items li > b {
+  display: inline-block;
+  width: 42mm;
+  text-align: right;
+  white-space: nowrap;
+}
+.profit {
+  display: block;
+  font-style: normal;
+  margin-top: 2px;
+}
+.exporter {
+  width: 70mm;
+  margin: 30px 0 0 auto;
+  text-align: center;
+  break-inside: avoid;
+}
+.exporter .signName {
+  margin-top: 60px;
+}
+.signLine {
+  border-top: 0.5pt solid #000;
+  padding-top: 3px;
+}
+
+@media print {
+  .sheets {
+    display: block;
+  }
+  .page {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .page + .page {
+    break-before: page;
+  }
+}

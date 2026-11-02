@@ -1,0 +1,128 @@
+/* The broker's inbox: a toolbar toggle and the inbox rows in the Credit Noted table. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.button:hover {
+  border-color: var(--border-strong);
+}
+.button svg {
+  color: var(--text-secondary);
+}
+.buttonOn,
+.buttonOn:hover {
+  border-color: var(--accent-primary);
+  background: var(--status-completed-bg);
+  color: var(--status-completed-fg);
+}
+.buttonOn svg {
+  color: currentColor;
+}
+.count {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 8px;
+  background: var(--accent-rose);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+/* Rows */
+.newRow {
+  background: color-mix(in srgb, var(--accent-primary) 5%, transparent);
+}
+.newDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 6px 1px -2px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+.remarkCell {
+  min-width: 240px;
+  max-width: 360px;
+  white-space: normal !important;
+}
+.tag {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--tone-bg);
+  color: var(--tone);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+.remark {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+.from {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.accept,
+.update {
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.accept {
+  border: 1px solid var(--accent-primary);
+  background: var(--accent-primary);
+  color: #041b2d;
+}
+.accept:hover:not(:disabled) {
+  background: var(--accent-lime-bright);
+}
+.accept:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.update {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+.update:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.accepted {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}

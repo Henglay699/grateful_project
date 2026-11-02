@@ -1,0 +1,238 @@
+/* Table icons: a chip by the title, icons in the tabs and column heads, and a building
+   badge before each client name. */
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.titleChip,
+.nameChip {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}
+.titleChip {
+  width: 32px;
+  height: 32px;
+}
+.titleChip svg {
+  width: 17px;
+  height: 17px;
+}
+.segBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.segBtn svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.75;
+}
+.th {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.th svg {
+  width: 13px;
+  height: 13px;
+}
+.nameLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.nameChip {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.nameChip svg {
+  width: 14px;
+  height: 14px;
+}
+.nameLink:hover .nameChip {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+/* Key Logistics Accounts with a single client: summary instead of a one-row table. */
+.single {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Client + total. */
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.badge {
+  flex-shrink: 0;
+  min-width: 42px;
+  height: 42px;
+  padding: 0 8px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--accent-primary);
+  background: var(--status-completed-bg);
+}
+.who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.name:hover {
+  color: var(--accent-primary);
+}
+.sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.05;
+}
+.total b {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.total span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Import / export split. */
+.flowBar {
+  display: flex;
+  gap: 3px;
+  height: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-subtle);
+}
+.flowBar span {
+  height: 100%;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+.flowBar span[data-on] {
+  opacity: 1;
+}
+.flowBar span:first-child,
+.flowLegend i[data-kind='imp'] {
+  background: var(--accent-primary);
+}
+.flowBar span:last-child,
+.flowLegend i[data-kind='exp'] {
+  background: var(--accent-blue);
+}
+.flowLegend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.flowLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.flowLegend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.flowLegend b {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* CY/CY, LCL, AIR tiles. */
+.modes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+}
+.modeLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.modeVal {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.modeVal small {
+  margin-left: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--text-tertiary);
+}
+.modeBar {
+  height: 4px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+.modeBar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-primary);
+}
+
+/* Year / Month dropdowns in the card header (one-client users). */
+.controls {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,1 @@
+ALTER TABLE "chat_messages" ADD COLUMN "mention_ids" uuid[] DEFAULT '{}'::uuid[] NOT NULL;

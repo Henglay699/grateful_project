@@ -1,0 +1,410 @@
+/* Accounting → Chea Payments: status cards (also the filter), then one card: toolbar + table. */
+.page {
+  display: flex !important;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Status colours: Unchecked amber, Reviewed blue, Approved (Checked) green, Revised violet. */
+.neutral {
+  --tone: var(--text-secondary);
+  --tone-bg: var(--bg-subtle);
+}
+.reviewed {
+  --tone: var(--status-progress-fg);
+  --tone-bg: var(--status-progress-bg);
+}
+.checked {
+  --tone: var(--accent-emerald);
+  --tone-bg: rgba(16, 185, 129, 0.12);
+}
+.unchecked {
+  --tone: var(--status-pending-fg);
+  --tone-bg: var(--status-pending-bg);
+}
+.revised {
+  --tone: #a78bfa;
+  --tone-bg: rgba(139, 92, 246, 0.14);
+}
+.requested {
+  --tone: #fb923c;
+  --tone-bg: rgba(249, 115, 22, 0.14);
+}
+.void {
+  --tone: var(--status-exception-fg);
+  --tone-bg: var(--status-exception-bg);
+}
+:global([data-theme='light']) .checked {
+  --tone: #059669;
+  --tone-bg: #d1fae5;
+}
+:global([data-theme='light']) .revised {
+  --tone: #7c3aed;
+  --tone-bg: #ede9fe;
+}
+:global([data-theme='light']) .requested {
+  --tone: #c2410c;
+  --tone-bg: #ffedd5;
+}
+
+/* Status cards */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+/* Chea Payments and Expense to Clients: Reviewed and Request Revise too. */
+.stats.five {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.stats.six {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  font-family: var(--font-main);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.stat:hover {
+  border-color: var(--border-strong);
+}
+.stat:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+.statOn,
+.statOn:hover {
+  border-color: var(--tone);
+}
+.neutral.statOn,
+.neutral.statOn:hover {
+  border-color: var(--accent-primary);
+}
+.statIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--tone-bg);
+  color: var(--tone);
+  flex-shrink: 0;
+}
+.statText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.statLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.statValue {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The one card: toolbar, table, footer */
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.search {
+  flex: 1 1 260px;
+  width: auto;
+  height: 36px;
+}
+.select {
+  height: 36px;
+  padding-left: 12px;
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.clear {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--accent-primary);
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.clear:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
+}
+
+.scroll {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.table th {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--text-tertiary);
+}
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.table tbody tr {
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.table tbody tr:hover,
+.table tbody tr:focus-visible {
+  background: var(--bg-subtle);
+  outline: none;
+}
+.num {
+  text-align: right !important;
+}
+/* Declare no.: the app's Helvetica, with even-width digits so the numbers line up. */
+.mono {
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+.fee {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.muted {
+  color: var(--text-tertiary) !important;
+}
+.client {
+  font-weight: 700;
+}
+.type {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.imp,
+.exp {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.imp {
+  background: var(--accent-primary);
+}
+.exp {
+  background: var(--accent-blue);
+}
+
+/* Empty state: a short card body, not a tall blank box. */
+.table td.empty {
+  padding: 44px 14px !important;
+  text-align: center;
+  color: var(--text-tertiary);
+  white-space: normal;
+  cursor: default;
+}
+.table tbody tr:has(.empty) {
+  cursor: default;
+  background: none;
+}
+.empty b {
+  display: block;
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+.empty > span:last-child {
+  display: block;
+  margin-top: 4px;
+  font-size: 12.5px;
+}
+.emptyIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+}
+
+/* Status pill: a <select> for accounting writers, a plain pill otherwise. */
+.table select.status,
+.statusPill {
+  height: 28px;
+  padding: 0 28px 0 12px;
+  border: 1px solid color-mix(in srgb, var(--tone) 35%, transparent);
+  border-radius: 8px;
+  background-color: var(--tone-bg);
+  background-position: right 9px center;
+  background-size: 11px;
+  color: var(--tone);
+  font-family: var(--font-main);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.table select.status:hover:not(:disabled, :focus) {
+  border-color: var(--tone);
+}
+/* The plain pill: a flat tag like the status tags elsewhere (CO Plans, shipments), no border. */
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: auto;
+  padding: 3px 9px;
+  border: 0;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Sidebar → Credit Noted (same page style) */
+.cn {
+  font-weight: 700;
+  color: var(--accent-primary) !important;
+}
+.newBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  margin-left: auto;
+  padding: 0 14px;
+  border: 1px solid var(--accent-primary);
+  border-radius: 8px;
+  background: var(--accent-primary);
+  color: #041b2d;
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.newBtn:hover {
+  background: var(--accent-lime-bright);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 14px 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+.foot > :last-child {
+  flex: 1;
+}
+
+@media (max-width: 1400px) {
+  .stats.six {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1100px) {
+  .stats,
+  .stats.five,
+  .stats.six {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .toolbar {
+    flex-wrap: wrap;
+  }
+}
+
+/* The "Send back for revision" dialog */
+.reviseField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.reviseField span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.reviseField textarea {
+  resize: vertical;
+  font-family: var(--font-main);
+  line-height: 1.5;
+}
+.reviseNote {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+
+/* Fill the window (as the ledger does): the card takes the height left, only the table
+   scrolls, and its header row stays in view. Small screens keep normal page scrolling. */
+@media (min-width: 900px) and (min-height: 600px) {
+  :global(.content):has(> .fill) {
+    display: flex;
+    flex-direction: column;
+  }
+  :global(.view.active).fill {
+    flex: 1;
+    min-height: 0;
+  }
+  .fill > .card {
+    flex: 1;
+    min-height: 0;
+  }
+  .fill .scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+.fill .scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg-surface);
+  box-shadow: 0 1px 0 0 var(--border-subtle);
+}

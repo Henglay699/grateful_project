@@ -1,0 +1,12 @@
+/* AddNewSelect: the CountrySelect dropdown, without flags or capitals. */
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Doubled class (and the ul) to outrank CountrySelect's `.list li` and the shipment form's
+   regular-weight options, whatever the stylesheet order. */
+ul li.add.add {
+  color: var(--accent-primary);
+  font-weight: 700;
+}

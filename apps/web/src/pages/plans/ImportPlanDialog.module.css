@@ -1,0 +1,127 @@
+/* Shipping Plans → Import Excel dialog. */
+.steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.steps li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-elevated);
+}
+.steps b {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+.steps span {
+  min-height: 34px;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  word-break: break-word;
+}
+
+.failure {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--status-exception-fg);
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.done,
+.ready {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--status-completed-bg);
+  color: var(--status-completed-fg);
+  font-size: 13px;
+  font-weight: 700;
+}
+.errors {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--status-exception-bg);
+  color: var(--status-exception-fg);
+  font-size: 13px;
+}
+.errors ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.errors li {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0;
+  color: var(--text-primary);
+}
+.where {
+  flex-shrink: 0;
+  min-width: 150px;
+  font-weight: 700;
+  color: var(--status-exception-fg);
+}
+
+.tableWrap {
+  max-height: 280px;
+  overflow: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.table th {
+  position: sticky;
+  top: 0;
+  padding: 8px 10px;
+  background: var(--bg-surface-elevated);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--text-tertiary);
+}
+.table td {
+  padding: 7px 10px;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+.ref {
+  font-weight: 700;
+  color: var(--accent-primary) !important;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}

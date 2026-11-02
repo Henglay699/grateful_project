@@ -1,0 +1,115 @@
+/* Tax invoice / disbursement / debit note header: three side-by-side columns (document,
+   customer, shipment), each a heading over its fields stacked one per row. */
+.card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 40px;
+  align-items: start;
+}
+.section {
+  min-width: 0;
+}
+/* Three levels: section title (large, accent underline) › field label (small, muted) › value. */
+.sectionHead {
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.sectionHead h4 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 -1px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent-primary);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+/* The shared card-title chip (.cx-title-icon), a size smaller for these column heads. */
+.headIcon {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+/* Full-width rows; short shipment values (PKGS, weight, ports…) pair up two to a row. */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 12px;
+  align-content: start;
+  align-items: start;
+}
+.field {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.field[data-half] {
+  grid-column: auto;
+}
+
+/* Fixed line boxes, so every label and box in a row lines up (Khmer glyphs included). The
+   full label shows on hover if a narrow column cuts it. */
+.field > label {
+  display: block;
+  height: 16px;
+  overflow: hidden;
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text-secondary);
+}
+.field :global(.form-field-box),
+.field :global(.form-select-box) {
+  width: 100%;
+  box-sizing: border-box;
+  height: 34px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 20px;
+}
+.field :global(.form-field-box) {
+  padding: 0 10px;
+}
+/* The global select padding (10px top and bottom) leaves no room for the text in a 34px box. */
+.field :global(.form-select-box) {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 10px;
+}
+.field :global(.form-field-box[readonly]) {
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  cursor: default;
+}
+/* Long values (addresses) wrap onto a second line instead of being cut off. */
+.field .textarea {
+  display: block;
+  height: 78px;
+  min-height: 54px;
+  padding: 6px 10px;
+  font-family: var(--font-main);
+  line-height: 20px;
+  resize: vertical;
+}
+.khmer {
+  font-family: 'GS Khmer', var(--font-main) !important;
+}
+
+@media (max-width: 1100px) {
+  .card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}

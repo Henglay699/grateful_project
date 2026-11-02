@@ -1,0 +1,123 @@
+/* Record Summary sheet, laid out like the accounting engine's: centred letterhead, a boxed
+   two-column header, and a gray-headed line table. */
+.rs {
+  font-family: 'GS Khmer', 'Helvetica', Arial, sans-serif;
+  color: #000;
+  font-size: 9pt;
+}
+
+.mast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  margin-bottom: 4px;
+}
+.logo {
+  position: absolute;
+  left: 0;
+  top: 60%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 100px;
+  object-fit: contain;
+}
+.company {
+  padding: 0 80px;
+  text-align: center;
+}
+/* Khmer company name in Moul, as on the accounting engine's letterhead (the tax invoice's
+   faces: an installed Khmer OS font first, else the self-hosted ones from printFonts.ts). */
+.km {
+  margin-bottom: 2px;
+  font-family: 'Khmer OS Muol', 'Khmer OS Muol Light', 'GS Moul', serif;
+  font-size: 10.5pt;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.en {
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 9.5pt;
+  font-weight: 700;
+}
+.vat {
+  margin-top: 2px;
+  font-family: 'Khmer OS Siemreap', 'GS Siemreap', 'GS Khmer', 'Helvetica', Arial, sans-serif;
+  font-size: 8.5pt;
+}
+.title {
+  margin: 4px 0 10px;
+  text-align: center;
+  font-size: 13pt;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Header box: rows fill left-to-right, two to a row. */
+.box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 14px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border: 1px solid #000;
+  font-size: 8pt;
+}
+.row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.lbl {
+  flex-shrink: 0;
+  width: 125px;
+  font-weight: 700;
+}
+.val {
+  flex: 1;
+  min-width: 0;
+  min-height: 14px;
+  border-bottom: 0.2px solid #c0c0c0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+/* The bar in "IMPORT | BY SEA: CY / CY". */
+.sep {
+  color: #a11d1d;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0.5pt solid #000;
+  font-size: 8pt;
+}
+.table th {
+  padding: 3px 4px;
+  border: 0.5pt solid #000;
+  background: #d4d4d4;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+}
+.table td {
+  padding: 3px 6px;
+  border: 0.5pt solid #000;
+  line-height: 1.25;
+  vertical-align: middle;
+}
+.c {
+  text-align: center;
+}
+.r {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.sum td {
+  border-top: 1pt solid #000;
+  background: #d4d4d4;
+  font-weight: 700;
+}

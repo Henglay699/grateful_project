@@ -1,0 +1,21 @@
+/* Four even columns so each row fills the width; labels that wrap keep inputs aligned. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px 18px;
+  align-items: end;
+}
+.span2 {
+  grid-column: span 2;
+}
+.span3 {
+  grid-column: span 3;
+}
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .span3 {
+    grid-column: span 2;
+  }
+}

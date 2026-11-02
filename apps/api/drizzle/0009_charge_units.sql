@@ -1,0 +1,1 @@
+ALTER TYPE "public"."lookup_type" ADD VALUE 'CHARGE_UNIT';

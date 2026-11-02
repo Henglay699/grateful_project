@@ -1,0 +1,683 @@
+/* Client Billing: the month overview and one client's month (documents → statements → payments). */
+
+/* ---------- Month stepper: ‹ [month] › ---------- */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.stepBtn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+.stepBtn:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.monthInput {
+  height: 34px;
+}
+
+/* ---------- Sections: Clients · Tax Invoices · Disbursements · Debit Notes · Receipts ---------- */
+.sections {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 8px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+}
+.section {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.section:hover {
+  color: var(--accent-primary);
+}
+.sectionOn,
+.sectionOn:hover {
+  background: var(--bg-surface);
+  color: var(--accent-primary);
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+.sectionsEnd {
+  margin-left: auto;
+}
+.sectionsTop {
+  margin-bottom: 12px;
+}
+
+/* ---------- Print month pack: parts menu ---------- */
+.packMenu {
+  position: relative;
+}
+.packPanel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 30;
+  width: 280px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* A shipment row's Print: the same menu, narrower, left-aligned text inside the table. */
+.rowPanel {
+  width: 230px;
+  text-align: left;
+  white-space: normal;
+}
+.packTitle {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.packOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.packGo {
+  margin-top: 4px;
+  justify-content: center;
+}
+.packGo:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Overview ---------- */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.barHint {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+.barActions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+.clientCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+  max-width: 300px;
+}
+.code {
+  display: inline-grid;
+  place-items: center;
+  min-width: 42px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.clientName {
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+  /* The table keeps cells on one line; long legal names may wrap. */
+  white-space: normal;
+}
+.num {
+  text-align: right !important;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.due {
+  font-weight: 700;
+  color: var(--status-pending-fg);
+}
+.settled {
+  font-weight: 700;
+  color: var(--status-completed-fg);
+}
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.flag {
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.flag[data-tone='warning'] {
+  color: var(--status-pending-fg);
+}
+.flag[data-tone='danger'] {
+  color: var(--status-exception-fg);
+}
+.chevron {
+  width: 28px;
+  color: var(--text-tertiary);
+  font-size: 18px;
+  text-align: right;
+}
+.totalRow td {
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-surface-elevated);
+}
+.emptyState {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.emptyState b {
+  display: block;
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+/* Stage pill for "nothing billed" (the other stages use .status-tag tones). */
+.neutral {
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+}
+
+/* ---------- One client's month ---------- */
+.page {
+  display: flex !important;
+  flex-direction: column;
+  gap: 16px;
+}
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.headTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--text-primary);
+}
+.headSub {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+.headActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.printBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.clickableHead {
+  cursor: pointer;
+  user-select: none;
+}
+.sectionTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.sectionTitle h3 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+.sectionNum {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--accent-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+.sectionDesc {
+  margin-top: 3px;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+.sectionActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sectionActions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Shipments table: one row per Monthly Ledger entry, a cell per document type. */
+.docTable .actionCol {
+  width: 1%;
+  text-align: center;
+  white-space: nowrap;
+}
+/* A row's ⋯: opens its print / export menu. */
+.docTable .rowDots {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.docTable .rowDots:hover,
+.docTable .rowDots[aria-expanded='true'] {
+  border-color: var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--accent-primary);
+}
+.docTable td {
+  vertical-align: top;
+}
+.declare {
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+.small a {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.cellStack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* A document in a cell: number · amount · state. Issued green, draft amber, typed-in-ledger grey. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  white-space: nowrap;
+  text-decoration: none;
+  background: var(--status-completed-bg);
+  color: var(--text-primary);
+}
+.chip b {
+  font-weight: 700;
+}
+.chip span {
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.chip em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.chip[data-status='ISSUED'] em {
+  color: var(--status-completed-fg);
+}
+.chip[data-status='DRAFT'] {
+  background: var(--status-pending-bg);
+}
+.chip[data-status='DRAFT'] em {
+  color: var(--status-pending-fg);
+}
+.chip[data-status='MANUAL'] {
+  background: transparent;
+  border-color: var(--border-strong);
+  border-style: dashed;
+}
+.chip[data-status='MANUAL'] em {
+  color: var(--text-tertiary);
+}
+a.chip:hover {
+  border-color: var(--accent-primary);
+}
+.addChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px dashed var(--border-strong);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+.addChip:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.none {
+  color: var(--text-tertiary);
+}
+.subhead {
+  margin: 18px 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Statements: two panels side by side, each with its payments and balance. */
+.statements {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+.statement {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-elevated);
+  overflow: hidden;
+}
+.stHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px 10px;
+}
+.stTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.stRange {
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+.stScroll {
+  overflow-x: auto;
+  padding: 0 6px;
+}
+.stTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.stTable th {
+  padding: 7px 10px;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+.stTable td {
+  padding: 7px 10px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+.stTable td b {
+  color: var(--text-primary);
+}
+.ledgerTag {
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px dashed var(--border-strong);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.stTable .statusCol {
+  width: 1%;
+  text-align: center;
+}
+.draftTag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--status-pending-fg, #b45309);
+}
+.stEmpty {
+  padding: 18px 16px;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+.stTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+}
+.payments {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px 14px;
+}
+.payLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.payRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+.payRow b {
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.payDesc {
+  flex: 1;
+  min-width: 0;
+}
+.payRow[data-void='true'] {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.payAmount {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.linkBtn {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  cursor: pointer;
+}
+.linkBtn[data-danger='true'] {
+  color: var(--status-exception-fg);
+}
+.balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Dialogs */
+.choice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.choice + .choice {
+  margin-top: 8px;
+}
+.choice:has(input:checked) {
+  border-color: var(--accent-primary);
+  background: rgba(6, 182, 212, 0.06);
+}
+.choice b {
+  display: block;
+  color: var(--text-primary);
+}
+.choice input {
+  margin-top: 3px;
+  accent-color: var(--accent-primary);
+}
+.words {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.words b {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+/* Same look as a form label, for a group heading (the payment method buttons). */
+.fieldLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.methods {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1100px) {
+  .statements {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .headTitle {
+    font-size: 19px;
+  }
+}
+
+/* A row opens its documents' preview (RowPreviewModal) when clicked outside its links. */
+.docTable tr[data-preview] {
+  cursor: pointer;
+}
+.docTable tr[data-active='true'] td {
+  background: var(--bg-subtle);
+}

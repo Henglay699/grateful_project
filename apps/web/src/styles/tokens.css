@@ -1,0 +1,92 @@
+/* Design tokens ported verbatim from the prototype (index.html). Dark is the default theme. */
+:root {
+  --sidebar-w: 220px;
+  --topbar-h: 52px;
+
+  /* Cyan / Blue Primary Accents */
+  --accent-primary: #06b6d4;
+  --accent-lime: #0ea5e9;
+  --accent-lime-bright: #38bdf8;
+  --accent-cyan: #06b6d4;
+  --accent-blue: #2563eb;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-emerald: #10b981;
+
+  /* Surfaces - Dark Default */
+  --bg-canvas: #070d12;
+  --bg-surface: #0e1720;
+  --bg-surface-elevated: #131f2b;
+  --bg-subtle: #172635;
+  --bg-inset: #091017;
+  --border-subtle: #1c2e3f;
+  --border-strong: #2a435c;
+
+  /* Text */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+
+  /* Status Colors */
+  --status-completed-bg: rgba(6, 182, 212, 0.12);
+  --status-completed-fg: #22d3ee;
+  --status-progress-bg: rgba(14, 165, 233, 0.12);
+  --status-progress-fg: #38bdf8;
+  --status-pending-bg: rgba(245, 158, 11, 0.12);
+  --status-pending-fg: #fbbf24;
+  --status-exception-bg: rgba(244, 63, 94, 0.12);
+  --status-exception-fg: #fb7185;
+  --status-paid-bg: rgba(16, 185, 129, 0.12);
+  --status-paid-fg: #34d399;
+
+  /* Workflow role colours (stage dots, owner chips, My Work) */
+  --tone-ops: #38bdf8;
+  --tone-broker: #a78bfa;
+  --tone-acct: #34d399;
+  --tone-mgr: #fbbf24;
+
+  /* Geometry - Box Shadows Removed */
+  --radius-xl: 8px;
+  --radius-lg: 8px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --shadow-card: none;
+  --shadow-glow: none;
+
+  /* 'GS Khmer' (src/lib/khmerFont.ts) covers Khmer characters only, so it goes first. */
+  --font-main: 'GS Khmer', 'Helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --tone-ops: #0284c7;
+  --tone-broker: #7c3aed;
+  --tone-acct: #059669;
+  --tone-mgr: #b45309;
+  --bg-canvas: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f1f5f9;
+  --bg-subtle: #e2e8f0;
+  --bg-inset: #edf2f7;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+
+  --status-completed-bg: #cffafe;
+  --status-completed-fg: #0891b2;
+  --status-progress-bg: #e0f2fe;
+  --status-progress-fg: #0369a1;
+  --status-pending-bg: #fef3c7;
+  --status-pending-fg: #b45309;
+  --status-exception-bg: #ffe4e6;
+  --status-exception-fg: #be123c;
+  --status-paid-bg: #d1fae5;
+  --status-paid-fg: #047857;
+
+  --shadow-card: none;
+  --shadow-glow: none;
+  color-scheme: light;
+}

@@ -1,0 +1,101 @@
+/* Read-only spreadsheet, styled like Excel's grid (always light, like the printed sheet). */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+  overflow: hidden;
+}
+.scroll {
+  flex: 1;
+  overflow: auto;
+}
+.grid {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: max-content;
+  font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif;
+  font-size: 14.5px;
+  color: #000;
+}
+.grid td {
+  height: 20px;
+  padding: 1px 4px;
+  border: 1px solid #e1e1e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  vertical-align: bottom;
+}
+.colHead,
+.rowHead,
+.corner {
+  position: sticky;
+  background: #f3f3f3;
+  color: #555;
+  font-size: 12px;
+  font-weight: 400;
+  border: 1px solid #d4d4d4;
+  z-index: 1;
+}
+.colHead {
+  top: 0;
+  height: 22px;
+  text-align: center;
+}
+.rowHead {
+  left: 0;
+  text-align: center;
+  padding: 0 4px;
+}
+.corner {
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.more {
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Sheet tabs along the bottom, like Excel. */
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 8px;
+  background: #f3f3f3;
+  border-top: 1px solid #d4d4d4;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.tab,
+.tabActive {
+  padding: 7px 16px;
+  border: none;
+  background: transparent;
+  font-size: 12.5px;
+  color: #444;
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.tab:hover {
+  background: #e8e8e8;
+}
+.tabActive {
+  background: #fff;
+  color: #107c41;
+  font-weight: 700;
+  border-bottom-color: #107c41;
+}
+
+.loading {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}

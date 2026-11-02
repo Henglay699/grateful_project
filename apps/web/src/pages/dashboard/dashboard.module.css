@@ -1,0 +1,376 @@
+/* Additions for live data (states, filters, legends). Card looks come from prototype.css. */
+.state {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  padding: 16px;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.stateError {
+  composes: state;
+  color: var(--status-exception-fg);
+}
+.skeleton {
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.tooltip {
+  background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+  color: #04202b;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: none;
+  border: none;
+}
+.tooltip b {
+  font-weight: 700;
+}
+.tooltipPlain {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filterInput {
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 14px;
+  outline: none;
+}
+.filterInput:focus {
+  border-color: var(--accent-primary);
+}
+
+/* CardToggle: the dropdown trigger's look, a swap icon that turns on each click, and the
+   new label rolling up into place. */
+.toggle {
+  overflow: hidden;
+}
+.toggleLabel {
+  display: inline-block;
+  animation: toggleRoll 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.toggleIcon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.toggle:hover .toggleIcon {
+  transform: rotate(180deg);
+}
+.toggle:active {
+  transform: scale(0.96);
+}
+@keyframes toggleRoll {
+  from {
+    opacity: 0;
+    transform: translateY(70%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toggleLabel {
+    animation: none;
+  }
+}
+
+.chartBox {
+  width: 100%;
+}
+.mutedNote {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Total Net Profit: title + month dropdown in one row; the client split sits right under the figure. */
+.profitHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.profitCard {
+  justify-content: flex-start;
+  gap: 16px;
+}
+.profitCard :global(.rc-top-hero) {
+  margin: 0;
+}
+/* Figure on the left; the year's months so far as mini columns on the right. */
+.profitHero {
+  align-items: flex-end;
+  gap: 16px;
+}
+.profitTrend {
+  flex: 0 1 160px;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.profitTrendBars {
+  height: 46px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+.profitTrendBars > span {
+  flex: 1;
+  height: var(--h);
+  border-radius: 3px 3px 1px 1px;
+  background: color-mix(in srgb, var(--accent-primary) 28%, transparent);
+  transform-origin: bottom;
+  animation: profitRise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d) both;
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease;
+  cursor: default;
+}
+.profitTrendBars > span[data-neg] {
+  background: color-mix(in srgb, var(--status-exception-fg) 35%, transparent);
+}
+.profitTrendBars > span[data-now] {
+  background: linear-gradient(
+    180deg,
+    var(--accent-primary),
+    color-mix(in srgb, var(--accent-primary) 65%, transparent)
+  );
+  box-shadow: 0 0 10px -2px color-mix(in srgb, var(--accent-primary) 70%, transparent);
+}
+.profitTrendBars > span:hover {
+  background: var(--accent-primary);
+}
+.profitTrendBars > span[data-dim] {
+  opacity: 0.45;
+}
+.profitTrendCap {
+  min-height: 15px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-align: right;
+  white-space: nowrap;
+}
+.profitTrendCap b {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+@keyframes profitRise {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* Rounded donut whose slices sweep in and grow on hover; the centre shows the hovered
+   client's share. The legend rows carry each client's profit and a share bar. */
+.profitBody {
+  gap: 26px;
+}
+/* Doubled up to beat the global .rc-donut-wrapper (130px), which loads after this file. */
+.profitBody .profitPie {
+  width: 140px;
+  height: 140px;
+}
+.profitCenter {
+  animation: profitFade 0.25s ease both;
+}
+.profitCenter :global(.pct) small {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+@keyframes profitFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+.profitLegend {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.profitLegend li {
+  --c: var(--accent-primary);
+  padding: 4px 8px;
+  margin: 0 -8px;
+  border-radius: 8px;
+  cursor: default;
+  animation: profitSlide 0.4s ease var(--d) both;
+  transition:
+    opacity 0.15s ease,
+    background 0.15s ease;
+}
+.profitLegend li[data-on] {
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+}
+.profitLegend li[data-dim] {
+  opacity: 0.4;
+}
+.profitLegendRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.profitLegendRow i {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c);
+}
+.profitLegendName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profitLegendRow b {
+  font-variant-numeric: tabular-nums;
+}
+.profitLegendRow b[data-neg] {
+  color: var(--status-exception-fg);
+}
+.profitLegendBar {
+  height: 4px;
+  margin: 5px 0 0 18px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  overflow: hidden;
+}
+.profitLegendBar span {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--c);
+  transform-origin: left;
+  animation: profitGrow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d) both;
+}
+@keyframes profitGrow {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes profitSlide {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profitTrendBars > span,
+  .profitCenter,
+  .profitLegend li,
+  .profitLegendBar span {
+    animation: none;
+  }
+}
+.profitTipName i {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.profitTip {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  min-width: 150px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.35);
+}
+.profitTipName {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.profitTipRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.profitTipRow b {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shipment Summary: Import / Export key beside the month dropdown. */
+.ssTools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ssLegend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.ssLegend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.ssLegend i:not(:first-child) {
+  margin-left: 6px;
+}
+@media (max-width: 560px) {
+  .ssLegend {
+    display: none;
+  }
+}

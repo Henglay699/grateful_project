@@ -1,0 +1,220 @@
+/*
+ * App-shell additions that the static prototype did not need.
+ * Everything visual still comes from tokens.css + prototype.css.
+ */
+
+/* The prototype made <body> the flex row; in React the shell mounts in #root. */
+#root {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+/* Visible keyboard focus everywhere (the prototype relied on hover states). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/*
+ * Text fields show focus with ONE line: their own border turns accent-coloured, and no
+ * second ring around it. (Checkboxes, radios, buttons and links keep the ring above, as
+ * they have no border to recolour.) Fields drawn without a border sit inside a box that
+ * highlights with :focus-within instead (top-bar search, ledger search, Ask AI).
+ * :where() keeps this at zero specificity, so a component's own focus style still wins.
+ */
+:where(
+  input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color']),
+  select,
+  textarea
+):focus-visible {
+  outline: none;
+}
+:where(
+  input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color']),
+  select,
+  textarea
+):focus {
+  border-color: var(--accent-primary);
+}
+
+/*
+ * One standard dropdown everywhere (the .form-select-box look): white box, thin border and a
+ * small grey chevron instead of the browser's own arrow. select[class] outranks the single
+ * class styles (.input, .form-field-box…) whose `background:` shorthand would erase the icon.
+ */
+select[class] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--bg-surface);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="%2394A3B8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 13px;
+  padding-right: 32px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  cursor: pointer;
+}
+select[class]:hover:not(:disabled, :focus) {
+  border-color: var(--border-strong);
+}
+select[class]:focus {
+  border-color: var(--accent-primary);
+}
+select[class]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/*
+ * The open list of every dropdown in the system, styled like our card dropdown menu
+ * (rounded panel, pill rows, accent row with a tick for the chosen option) instead of the
+ * browser's grey list. Uses the customizable <select> (`appearance: base-select`, Chrome and
+ * Edge 135+); other browsers keep their native list, so forms work the same everywhere.
+ */
+@supports (appearance: base-select) {
+  select,
+  select::picker(select) {
+    appearance: base-select;
+  }
+  /* Our own chevron is the background image; hide the built-in one. */
+  select[class]::picker-icon {
+    display: none;
+  }
+  select[class] {
+    align-items: center;
+    color: var(--text-primary);
+  }
+  select::picker(select) {
+    margin-block: 6px;
+    padding: 6px;
+    min-width: anchor-size(width);
+    max-height: min(340px, 60vh);
+    overflow-y: auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface-elevated);
+    box-shadow: 0 16px 36px -18px rgba(15, 23, 42, 0.35);
+    scrollbar-width: thin;
+  }
+  select option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-main);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background 0.12s ease,
+      color 0.12s ease;
+  }
+  select option + option {
+    margin-top: 2px;
+  }
+  select option:hover,
+  select option:focus-visible {
+    outline: none;
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+  }
+  select option:checked {
+    background: var(--accent-primary);
+    color: #041b2d;
+    font-weight: 700;
+  }
+  /* Tick on the right of the chosen option (the browser puts it on the left). */
+  select option::checkmark {
+    order: 1;
+    margin-left: auto;
+    content: '✓';
+    font-size: 12px;
+    font-weight: 700;
+  }
+  select option:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+  select optgroup {
+    padding: 6px 4px 2px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+}
+
+/* Mobile: dim the page behind the open sidebar and close it on tap. */
+.sidebar-scrim {
+  display: none;
+}
+@media (max-width: 860px) {
+  .sidebar {
+    z-index: 60;
+  }
+  .sidebar.open + .sidebar-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(7, 13, 18, 0.55);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--accent-primary);
+  color: #001018;
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* The whole field opens the picker (src/lib/datePicker.ts), so show it as clickable. */
+input:is([type='date'], [type='month'], [type='week'], [type='time'], [type='datetime-local']):not(
+    :disabled,
+    [readonly]
+  ),
+input:is(
+    [type='date'],
+    [type='month'],
+    [type='week'],
+    [type='time'],
+    [type='datetime-local']
+  )::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+/* No selected-text look on the month / day / year segment; the field's focus ring still shows. */
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-year-field:focus,
+input::-webkit-datetime-edit-week-field:focus,
+input::-webkit-datetime-edit-hour-field:focus,
+input::-webkit-datetime-edit-minute-field:focus,
+input::-webkit-datetime-edit-ampm-field:focus {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

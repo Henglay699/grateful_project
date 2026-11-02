@@ -1,0 +1,289 @@
+/* Settings → Public holidays. */
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+/* Title with an info "!" beside it (Tax management). */
+.titleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.year {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.year b {
+  min-width: 44px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.year button {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.year button:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 12px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-elevated);
+}
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.grow {
+  flex: 1;
+  min-width: 180px;
+}
+.formButtons {
+  display: flex;
+  gap: 8px;
+}
+.error {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--status-exception-fg);
+}
+
+/* Summary line above the list. */
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+.summary > span {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+}
+.summary b {
+  color: var(--text-primary);
+}
+.summary .nextChip {
+  border-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+
+/* The list scrolls inside the card; month headings stay in view. */
+.table {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+.month + .month {
+  border-top: 1px solid var(--border-subtle);
+}
+.monthHead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--bg-surface-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.monthHead small {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-tertiary);
+}
+.row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+}
+.row + .row {
+  border-top: 1px dashed var(--border-subtle);
+}
+/* A small calendar page: weekday over the day number. */
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  line-height: 1.1;
+}
+.tile small {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+}
+.tile b {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.name {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.nameLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.name small {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.tag,
+.tagNext {
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-style: normal;
+  font-weight: 700;
+  background: var(--bg-surface-elevated);
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-subtle);
+}
+.tagNext {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #fff;
+}
+.row[data-state='next'] {
+  background: color-mix(in srgb, var(--accent-primary) 7%, transparent);
+}
+.row[data-state='next'] .tile {
+  border-color: var(--accent-primary);
+}
+.row[data-state='past'] .tile,
+.row[data-state='past'] .name {
+  opacity: 0.55;
+}
+/* Days still to confirm against the year's sub-decree. */
+.row[data-provisional] .name small {
+  color: var(--status-pending-fg);
+  font-weight: 600;
+}
+.nameKh {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.actions {
+  display: flex;
+  gap: 6px;
+}
+/* Square icon buttons on a soft tile: pencil (edit) and bin (remove). */
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.iconBtn svg {
+  width: 15px;
+  height: 15px;
+}
+.iconBtn:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+.iconBtn[data-danger]:hover {
+  color: var(--status-exception-fg);
+  border-color: var(--status-exception-fg);
+  background: var(--status-exception-bg);
+}
+.empty {
+  margin: 0;
+  padding: 18px 16px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 48px 1fr;
+  }
+  .actions {
+    grid-column: 2;
+  }
+}

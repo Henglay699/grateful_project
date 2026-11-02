@@ -1,0 +1,140 @@
+/* The capacity report on A4 portrait, black on white regardless of the app theme. */
+.sheet {
+  --km-title: 'Khmer OS Muol Light', 'Khmer OS Muol', 'GS Moul', serif;
+  --km-body: 'Khmer OS Siemreap', 'GS Siemreap', 'GS Khmer', Arial, sans-serif;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 14mm 14mm 16mm;
+  background: #fff;
+  color: #000;
+  font-family: var(--km-body);
+  font-size: 10.5pt;
+  line-height: 1.75;
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.18);
+}
+.muol,
+.kingdom,
+.ministry {
+  font-family: var(--km-title);
+}
+.kingdom {
+  text-align: center;
+  font-size: 12.5pt;
+  line-height: 1.9;
+}
+.ministry {
+  width: max-content;
+  text-align: center;
+  font-size: 10.5pt;
+  line-height: 1.9;
+}
+.title {
+  margin: 6px 0 10px;
+  text-align: center;
+}
+.title .muol {
+  font-size: 11.5pt;
+}
+.kv {
+  display: grid;
+  grid-template-columns: 62mm 1fr;
+  column-gap: 8px;
+}
+.kv b {
+  font-family: Arial, sans-serif;
+}
+.indent {
+  padding-left: 6mm;
+}
+.point {
+  break-inside: avoid;
+}
+.pointHead {
+  margin-top: 2px;
+}
+.line {
+  padding-left: 6mm;
+}
+.plain {
+  margin-left: 6mm;
+  border-collapse: collapse;
+}
+.plain td {
+  padding: 0 8px 0 0;
+  white-space: nowrap;
+}
+.label {
+  min-width: 46mm;
+}
+.num {
+  min-width: 12mm;
+  text-align: right;
+  font-family: Arial, sans-serif;
+  padding-right: 12px !important;
+}
+.right {
+  text-align: right;
+}
+.bold td {
+  font-weight: 700;
+}
+.grid {
+  width: 100%;
+  margin: 4px 0 6px;
+  border-collapse: collapse;
+  font-family: Arial, var(--km-body);
+  font-size: 9.5pt;
+  line-height: 1.45;
+}
+.grid th,
+.grid td {
+  border: 1px solid #000;
+  padding: 3px 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+.grid th {
+  font-family: var(--km-body);
+  font-weight: 400;
+}
+.grid small {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 8.5pt;
+}
+.para {
+  margin: 0;
+  padding-left: 6mm;
+  text-indent: 0;
+  overflow-wrap: anywhere;
+}
+.signs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  text-align: center;
+}
+.signs > div,
+.approve {
+  min-width: 70mm;
+}
+.signName {
+  margin-top: 16mm;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+}
+.approve {
+  margin: 4mm auto 0;
+  width: max-content;
+  text-align: center;
+}
+
+@media print {
+  .sheet {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}

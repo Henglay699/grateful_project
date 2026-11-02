@@ -1,0 +1,619 @@
+/* Staff form: Profile, Client access and Permissions as titled panels; members list bits. */
+/* Wide dialog: Profile + Client access left, Permissions right. */
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.col > .panel {
+  margin: 0;
+}
+/* Client access and Permissions stretch so both columns end on the same line. */
+.grow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.grow .count {
+  margin-top: auto;
+  padding-top: 14px;
+}
+/* Profile: Full name / Role / Status, Job title / Department / Phone, Email. */
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 16px;
+}
+.profileGrid input[readonly] {
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  cursor: default;
+}
+@media (max-width: 560px) {
+  .profileGrid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Two client cards per row; long names wrap rather than being cut off. */
+.clientGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.clientName {
+  white-space: normal !important;
+  overflow: visible !important;
+  line-height: 1.3;
+}
+@media (max-width: 1000px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  margin: 0 0 14px;
+  padding: 18px 20px;
+  min-width: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+}
+.panel:disabled {
+  opacity: 0.65;
+}
+
+.panelHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.panelHead > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.panelHead h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.panelHead p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--text-tertiary);
+}
+.panelHead p b {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.panelIcon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--accent-primary);
+  background: var(--status-completed-bg);
+}
+
+/* All clients / Only these. */
+.segment {
+  flex-shrink: 0;
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+}
+.segment button {
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.segment button[aria-checked='true'] {
+  background: var(--bg-surface);
+  color: var(--accent-primary);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+.allNote {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Client cards: code badge, name, tick when chosen. */
+.clientGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px;
+}
+.clientCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.clientCard:hover {
+  border-color: var(--border-strong);
+}
+.clientCard input,
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.clientCard:has(input:focus-visible),
+.toggle:has(input:focus-visible) {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+.clientCode {
+  flex-shrink: 0;
+  min-width: 38px;
+  padding: 5px 7px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+}
+.clientName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.tick {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 8px;
+  color: transparent;
+}
+.tick svg {
+  width: 13px;
+  height: 13px;
+}
+.clientCard:has(input:checked) {
+  border-color: var(--accent-primary);
+  background: var(--status-completed-bg);
+}
+.clientCard:has(input:checked) .clientCode {
+  color: #fff;
+  background: var(--accent-primary);
+}
+.clientCard:has(input:checked) .clientName {
+  color: var(--text-primary);
+}
+.clientCard:has(input:checked) .tick {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #fff;
+}
+.count {
+  margin-top: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Permissions: one row per area, actions as on/off pills. */
+.changes {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--status-pending-fg);
+}
+.resetLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--accent-primary);
+  cursor: pointer;
+}
+.resetLink:hover {
+  text-decoration: underline;
+}
+.permList {
+  display: flex;
+  flex-direction: column;
+}
+.permBlock {
+  border-top: 1px solid var(--border-subtle);
+}
+.permBlock:first-child {
+  border-top: 0;
+}
+.permRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+}
+.permBlock:first-child .permRow {
+  padding-top: 0;
+}
+
+/* A section's own client access: button on its row, choices underneath. */
+.scopeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 220px;
+  padding: 6px 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+  background: none;
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.scopeBtn svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+.scopeBtn:hover,
+.scopeBtn[aria-expanded='true'] {
+  border-color: var(--accent-primary);
+  color: var(--text-secondary);
+}
+.scopeBtn[data-own] {
+  border-style: solid;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.caret {
+  font-size: 10px;
+}
+.scopePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+}
+.scopePanel .allNote {
+  background: var(--bg-surface);
+}
+.scopePanel .clientCard {
+  background: var(--bg-surface);
+}
+.scopeHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.scopePanel .segment {
+  background: var(--bg-surface);
+}
+.scopePanel .segment button[aria-checked='true'] {
+  background: var(--bg-subtle);
+}
+.area {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.area b {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.area span {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px 6px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+}
+.toggleTick {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  color: transparent;
+}
+.toggleTick svg {
+  width: 10px;
+  height: 10px;
+}
+.toggle:has(input:checked) {
+  border-color: var(--accent-primary);
+  background: var(--status-completed-bg);
+  color: var(--text-primary);
+}
+.toggle:has(input:checked) .toggleTick {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #fff;
+}
+/* Changed from the role: amber outline so it stands out. */
+.toggle[data-custom] {
+  border-color: var(--status-pending-fg);
+  box-shadow: 0 0 0 1px var(--status-pending-fg) inset;
+}
+
+.selfNote {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Action bar stays in view at the bottom of the dialog. */
+.footer {
+  position: sticky;
+  bottom: -1px;
+  z-index: 2;
+  margin-top: 4px !important;
+  padding: 14px 0 2px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+/* Roles & permissions matrix: area header rows, big clickable tick boxes. */
+/* The card fills the window and only the table scrolls, so the title and the role
+   column headers stay in view (sticky) while you scroll through the permissions. */
+.matrixCard {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--topbar-h) - 48px - 56px);
+  min-height: 420px;
+}
+.matrixCard > * {
+  flex-shrink: 0;
+}
+.matrixWrap {
+  flex: 1 1 auto !important;
+  min-height: 0;
+  max-height: none;
+  overflow: auto;
+}
+.matrix {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-main);
+}
+.matrix thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface-elevated);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.matrix thead th:first-child {
+  text-align: left;
+  padding-left: 16px;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.matrix thead th span {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.groupRow th {
+  padding: 14px 16px 6px;
+  text-align: left;
+  border-top: 1px solid var(--border-subtle);
+}
+.matrix tbody:first-of-type .groupRow th {
+  border-top: 0;
+}
+.groupRow b {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.groupRow span {
+  margin-left: 8px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.actionCell {
+  padding: 2px 16px 2px 30px;
+  text-align: left;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.matrix tbody tr:not(.groupRow):hover {
+  background: var(--bg-subtle);
+}
+.matrix td {
+  padding: 0;
+  text-align: center;
+}
+/* The whole cell is the click target. */
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  cursor: pointer;
+}
+.cell input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.box {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: transparent;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+.box svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 3;
+}
+.cell:hover .box {
+  border-color: var(--accent-primary);
+}
+.cell:active .box {
+  transform: scale(0.92);
+}
+.cell:has(input:checked) .box {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #fff;
+}
+.cell:has(input:focus-visible) .box {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+/* Admin (always everything) and read-only viewers: muted, not clickable. */
+.cell[data-locked] {
+  cursor: default;
+}
+.cell[data-locked] .box {
+  border-color: var(--border-subtle);
+}
+.cell[data-locked]:has(input:checked) .box {
+  border-color: transparent;
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+}
+.cell[data-locked]:hover .box {
+  border-color: var(--border-subtle);
+}
+
+/* Members list. */
+.member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.custom {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--status-pending-fg);
+}
+.muted {
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 640px) {
+  .panelHead {
+    flex-wrap: wrap;
+  }
+  .permRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .toggles {
+    justify-content: flex-start;
+  }
+}

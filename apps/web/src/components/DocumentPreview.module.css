@@ -1,0 +1,251 @@
+/* Document preview: a large reading pane over a dimmed page (Outlook-style). */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(7, 13, 18, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.viewer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(1100px, 100%);
+  height: min(92vh, 100%);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px 14px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.fileIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  color: var(--accent-primary);
+}
+.fileIcon svg {
+  width: 19px;
+  height: 19px;
+}
+.titleWrap {
+  flex: 1;
+  min-width: 0;
+}
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.meta {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+/* Download sits beside the 40px close button. */
+.head :global(.new-shipment-btn) {
+  height: 40px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+.close:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.close svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* Grey reading area; pages sit on it like paper. */
+.body {
+  flex: 1;
+  overflow: auto;
+  background: var(--bg-canvas);
+  padding: 24px 24px 80px;
+}
+.pdfPages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: fit-content;
+}
+.sheet {
+  display: block;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+  border-radius: 2px;
+}
+.imageWrap {
+  display: flex;
+  justify-content: center;
+  min-width: fit-content;
+}
+.textSheet {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  color: #111827;
+  overflow-x: auto;
+}
+.pre {
+  margin: 0;
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.csv {
+  border-collapse: collapse;
+  font-size: 12.5px;
+  width: max-content;
+  min-width: 100%;
+}
+.csv th,
+.csv td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+.csv th {
+  background: #f3f4f6;
+  font-weight: 700;
+}
+.more {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.loading {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  max-width: 380px;
+  margin: 60px auto 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.notice strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.noticeIcon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+}
+.noticeIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Floating zoom pill, bottom centre (like Outlook's viewer toolbar). */
+.zoomBar {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.2);
+}
+.zoomBar button {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.zoomBar button:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+.zoomBar .zoomValue {
+  min-width: 62px;
+  font-size: 12.5px;
+}
+.pages {
+  padding: 0 10px 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  border-right: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: 0;
+  }
+  .viewer {
+    height: 100%;
+    border-radius: 0;
+  }
+  .body {
+    padding: 12px 12px 76px;
+  }
+  .head :global(.new-shipment-btn) {
+    font-size: 0;
+    gap: 0;
+    padding: 0 12px;
+  }
+}

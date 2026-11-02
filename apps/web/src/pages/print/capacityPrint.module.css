@@ -1,0 +1,48 @@
+/* Capacity report print page: the A4 sheet on a gray desk, toolbar hidden when printing. */
+.page {
+  min-height: 100vh;
+  background: #e5e7eb;
+  padding: 24px 12px 60px;
+  font-family: 'Helvetica', Arial, sans-serif;
+  color: #111827;
+}
+.toolbar {
+  max-width: 210mm;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toolbar b {
+  margin-right: auto;
+  font-size: 13px;
+}
+.btn {
+  font: 700 13px/1 inherit;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  cursor: pointer;
+}
+.btnPrimary {
+  composes: btn;
+  background: #0891b2;
+  border-color: #0891b2;
+  color: #fff;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 14mm;
+  }
+  .page {
+    padding: 0;
+    background: #fff;
+  }
+  .toolbar {
+    display: none;
+  }
+}

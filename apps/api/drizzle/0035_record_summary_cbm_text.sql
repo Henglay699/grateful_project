@@ -1,0 +1,1 @@
+ALTER TABLE "record_summaries" ALTER COLUMN "cbm" SET DATA TYPE text;

@@ -1,0 +1,1 @@
+ALTER TYPE "public"."credit_note_review" ADD VALUE 'REVIEWED' BEFORE 'CHECKED';

@@ -1,0 +1,329 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.tool {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  text-align: left;
+  padding: 16px;
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+}
+.tool:hover,
+.tool:focus-visible {
+  border-color: var(--accent-primary);
+}
+.toolIcon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--status-completed-bg);
+  color: var(--accent-primary);
+}
+.toolIcon svg {
+  width: 20px;
+  height: 20px;
+}
+.toolName {
+  font-weight: 800;
+  font-size: 14px;
+}
+.toolDesc {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+.sectionHeading {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.group + .group {
+  margin-top: 24px;
+}
+
+.drop {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  padding: 34px 16px;
+  text-align: center;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-inset);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.drop:hover,
+.dropActive {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+.dropHint {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.files {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.fileRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-elevated);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.fileRowDrag {
+  cursor: grab;
+}
+.fileRowDrag:active {
+  cursor: grabbing;
+}
+.grip {
+  color: var(--text-tertiary);
+  font-size: 14px;
+  line-height: 1;
+}
+.fileName {
+  flex: 1 1 120px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fileMeta {
+  color: var(--text-tertiary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.iconBtn:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.iconBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  align-items: flex-end;
+  margin-top: 16px;
+}
+.option {
+  display: grid;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+.radioRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.radioRow label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  cursor: pointer;
+}
+.note {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.runRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+}
+.progress {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.error {
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--status-exception-fg);
+}
+
+.results {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+.resultsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.pages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.page {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-elevated);
+  cursor: grab;
+}
+.pageDragging {
+  opacity: 0.4;
+}
+.pageOver {
+  border-color: var(--accent-primary);
+}
+.thumbBox {
+  display: grid;
+  place-items: center;
+  height: 170px;
+  overflow: hidden;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm);
+}
+.thumbBox img {
+  max-width: 100%;
+  max-height: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s;
+}
+.pageBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+.pageBtns {
+  display: flex;
+  gap: 4px;
+}
+.pageBtns .iconBtn {
+  width: 25px;
+  height: 25px;
+}
+
+/* Remove pages: click a thumbnail to mark it. */
+.pagePick {
+  font-family: var(--font-main);
+  text-align: left;
+  cursor: pointer;
+  /* Shift-click would otherwise highlight text across the grid. */
+  user-select: none;
+}
+.pagePick:hover,
+.pagePick:focus-visible {
+  border-color: var(--border-strong);
+}
+.pageRemoved {
+  border-color: var(--status-exception-fg);
+}
+.pagePick:hover.pageRemoved {
+  border-color: var(--status-exception-fg);
+}
+.pageRemoved .thumbBox img {
+  opacity: 0.35;
+}
+.thumbBox {
+  position: relative;
+}
+/* Blank page shown until the preview is drawn. */
+.thumbPending {
+  width: 70%;
+  height: 85%;
+  border-radius: 2px;
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  animation: thumbPulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes thumbPulse {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thumbPending {
+    animation: none;
+  }
+}
+.removeMark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+  font-weight: 800;
+  color: var(--status-exception-fg);
+}
+.removeLabel {
+  color: var(--status-exception-fg);
+}

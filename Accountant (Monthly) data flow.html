@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accountant (Monthly) — Data Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#16202E; --muted:#5D6B7E; --line:#D9DFE7; --row-hover:#EEF2F7;
+  --c-record:#2F6FED; --c-fees:#B8740A; --c-dn:#7A4FD6; --c-chea:#D1435B; --c-rule:#0E8F80;
+  --grid:rgba(22,32,46,.05);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F141B; --surface:#171E28; --ink:#E6ECF3; --muted:#93A1B3; --line:#2A3442; --row-hover:#1F2835;
+    --c-record:#6E9BFF; --c-fees:#E7A93B; --c-dn:#A88BFF; --c-chea:#FF7A8E; --c-rule:#3FD0BC;
+    --grid:rgba(230,236,243,.04); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --surface:#171E28; --ink:#E6ECF3; --muted:#93A1B3; --line:#2A3442; --row-hover:#1F2835;
+  --c-record:#6E9BFF; --c-fees:#E7A93B; --c-dn:#A88BFF; --c-chea:#FF7A8E; --c-rule:#3FD0BC;
+  --grid:rgba(230,236,243,.04); color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px; line-height:1.4;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+.wrap{max-width:1360px; margin:0 auto; padding:32px 24px 48px}
+header.page{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px 32px; margin-bottom:28px}
+h1{font-size:28px; font-weight:700; letter-spacing:-.01em; margin:0 0 4px}
+.sub{color:var(--muted); margin:0; max-width:60ch}
+.legend{display:flex; flex-wrap:wrap; gap:8px 16px; margin:0; padding:0; list-style:none; font-size:13px; color:var(--muted)}
+.legend li{display:flex; align-items:center; gap:6px}
+.legend i{width:10px; height:10px; border-radius:3px; display:inline-block}
+
+.board{position:relative; display:grid; grid-template-columns:minmax(220px,1fr) minmax(300px,1.25fr) minmax(240px,1fr); gap:28px 72px; align-items:start}
+.col{display:flex; flex-direction:column; gap:20px; position:relative; z-index:2}
+svg.wires{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:visible}
+svg.wires path{fill:none; stroke-width:1.6; opacity:.55; transition:opacity .15s, stroke-width .15s}
+svg.wires path.dim{opacity:.08}
+svg.wires path.hot{opacity:1; stroke-width:2.4}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden}
+.card > h2{margin:0; font-size:14px; font-weight:600; padding:10px 14px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--line)}
+.card > h2::before{content:""; width:8px; height:8px; border-radius:2px; background:var(--accent)}
+.card > h2 small{margin-left:auto; font-weight:500; color:var(--muted); font-size:12px}
+.card ul{list-style:none; margin:0; padding:4px 0}
+.card li{padding:5px 14px; font-size:13px; display:flex; align-items:center; gap:8px; min-height:28px}
+.card li.total{font-weight:600; border-top:1px dashed var(--line); margin-top:4px; padding-top:8px}
+.card li.linked{box-shadow:inset 3px 0 0 var(--accent)}
+.card p{margin:0; padding:12px 14px; font-size:13px}
+.record{--accent:var(--c-record)} .fees{--accent:var(--c-fees)} .dn{--accent:var(--c-dn)}
+.chea{--accent:var(--c-chea)} .rule{--accent:var(--c-rule)}
+
+/* centre sheet */
+.sheet{--accent:var(--ink); border-width:1.5px; border-color:var(--ink)}
+.sheet > h2{font-size:16px; padding:14px 16px; background:var(--ink); color:var(--surface)}
+.sheet > h2::before{display:none}
+.sheet > h2 small{color:var(--surface); opacity:.75}
+.sheet .grp{font-size:12px; color:var(--muted); padding:10px 16px 2px; font-weight:600}
+.sheet li{padding:6px 16px; cursor:default; border-left:3px solid transparent}
+.sheet li:hover,.sheet li:focus-visible{background:var(--row-hover); outline:none}
+.sheet li[data-src="record"]{border-left-color:var(--c-record)}
+.sheet li[data-src="fees"]{border-left-color:var(--c-fees)}
+.sheet li[data-src="dn"]{border-left-color:var(--c-dn)}
+.sheet li[data-src="chea"]{border-left-color:var(--c-chea)}
+.sheet li[data-src="rule"]{border-left-color:var(--c-rule)}
+.sheet li .name{flex:1}
+.tag{font-size:11px; padding:1px 7px; border-radius:20px; border:1px solid currentColor; white-space:nowrap; font-weight:500}
+.t-record{color:var(--c-record)} .t-fees{color:var(--c-fees)} .t-dn{color:var(--c-dn)} .t-chea{color:var(--c-chea)} .t-rule{color:var(--c-rule)}
+.pill{font-size:11px; padding:1px 8px; border-radius:20px; background:var(--row-hover); color:var(--muted)}
+.input-note{display:flex; gap:8px; align-items:center; padding:10px 16px; font-size:12.5px; border-bottom:1px solid var(--line); color:var(--muted)}
+.input-note b{color:var(--ink); font-weight:600}
+
+.formula{font-size:14px; padding:14px; line-height:1.9}
+.formula .plus{color:var(--c-rule); font-weight:600}
+.formula .minus{color:var(--c-chea); font-weight:600}
+.formula code{font-family:inherit; font-weight:600; background:var(--row-hover); padding:2px 7px; border-radius:5px; white-space:nowrap}
+.foot{color:var(--muted); font-size:12.5px; margin-top:28px; max-width:80ch}
+
+@media (max-width:1000px){
+  .board{grid-template-columns:1fr; gap:20px}
+  .col.center{order:-1}
+  svg.wires{display:none}
+}
+@media (prefers-reduced-motion:reduce){svg.wires path{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <div>
+      <h1>Accountant (Monthly) data flow</h1>
+      <p class="sub">Where each column of the monthly accountant sheet comes from, and the rules applied to it. Hover a row in the sheet to trace its links.</p>
+    </div>
+    <ul class="legend" aria-label="Source colours">
+      <li><i style="background:var(--c-record)"></i>Record summary</li>
+      <li><i style="background:var(--c-fees)"></i>Service fees</li>
+      <li><i style="background:var(--c-dn)"></i>Debit note</li>
+      <li><i style="background:var(--c-chea)"></i>Chea payment</li>
+      <li><i style="background:var(--c-rule)"></i>Rules &amp; calculations</li>
+    </ul>
+  </header>
+
+  <div class="board" id="board">
+    <svg class="wires" id="wires" aria-hidden="true"></svg>
+
+    <!-- LEFT: sources -->
+    <div class="col left">
+      <section class="card record">
+        <h2>Record Summary</h2>
+        <ul>
+          <li id="rs-declareno">Declare No</li>
+          <li id="rs-declaredate">Declare Date</li>
+          <li id="rs-client">Factory or Client</li>
+          <li>QTY (CTNS)</li>
+          <li>Weight (Gross Weight)</li>
+          <li>CBM</li>
+          <li>Port</li>
+          <li>BL No</li>
+          <li>CTNR No</li>
+          <li>Forwarder</li>
+        </ul>
+      </section>
+
+      <section class="card fees">
+        <h2>Service Fees</h2>
+        <ul>
+          <li id="fe-import">Import or Export Processing Fee</li>
+          <li id="fe-thc">THC or HBL</li>
+          <li id="fe-customs">Customs Processing Fee</li>
+          <li id="fe-warehouse">Warehouse Fee</li>
+          <li>LOLO at Port</li>
+        </ul>
+      </section>
+
+      <section class="card dn">
+        <h2>Debit Note (DN)</h2>
+        <ul>
+          <li>Trucking Fee</li>
+          <li>Increase Trucking</li>
+          <li>Missing Insurance</li>
+          <li>Fuel Surcharge</li>
+          <li>Petrol Allowance Fee</li>
+          <li>Handling Fee</li>
+          <li>Document Fee</li>
+          <li>Permit Fee</li>
+          <li>Service Taxation</li>
+          <li>Return Empty</li>
+          <li>LOLO Empty Container</li>
+          <li>Others</li>
+          <li class="total" id="dn-total">Total Amount of Debit Note</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- CENTRE: accountant sheet -->
+    <div class="col center">
+      <section class="card sheet">
+        <h2>Accountant (Monthly) <small>23 columns</small></h2>
+        <div class="input-note"><b>Input:</b> Declare No only — the linked fields fill in from the records.</div>
+        <ul>
+          <li class="grp" aria-hidden="true">Status &amp; port</li>
+          <li tabindex="0" id="ac-chea"><span class="name">Chea Payment</span><span class="pill">Not yet</span><span class="pill">Paid</span></li>
+          <li tabindex="0" id="ac-portno" data-src="rule"><span class="name">Port Number</span><span class="tag t-rule">Port list</span></li>
+          <li tabindex="0" id="ac-portcode" data-src="rule"><span class="name">Port Code</span><span class="tag t-rule">Port list</span></li>
+          <li tabindex="0" id="ac-portname" data-src="rule"><span class="name">Port Name</span><span class="tag t-rule">Port list</span></li>
+
+          <li class="grp" aria-hidden="true">Shipment</li>
+          <li tabindex="0" id="ac-declare" data-src="record"><span class="name">Declare</span><span class="tag t-record">Declare No</span></li>
+          <li tabindex="0" id="ac-date" data-src="record"><span class="name">Date</span><span class="tag t-record">Declare Date</span></li>
+          <li tabindex="0" id="ac-client" data-src="record"><span class="name">Client</span><span class="tag t-record">Factory or Client</span></li>
+
+          <li class="grp" aria-hidden="true">Documents</li>
+          <li tabindex="0" id="ac-invno"><span class="name">INV No</span></li>
+          <li tabindex="0" id="ac-disno"><span class="name">DIS No</span></li>
+          <li tabindex="0" id="ac-dnno"><span class="name">DN No</span></li>
+          <li tabindex="0" id="ac-invdate" data-src="rule"><span class="name">Date (invoice)</span><span class="tag t-rule">Declare date + 1</span></li>
+          <li tabindex="0" id="ac-exrate" data-src="rule"><span class="name">Exchange Rate</span><span class="tag t-rule">Working days</span></li>
+          <li tabindex="0" id="ac-weekday"><span class="name">Weekday</span></li>
+
+          <li class="grp" aria-hidden="true">Costs</li>
+          <li tabindex="0" id="ac-clear" data-src="chea"><span class="name">Clear Fee</span><span class="tag t-chea">Chea Pay total</span></li>
+          <li tabindex="0" id="ac-thc" data-src="fees"><span class="name">THC or HBL</span><span class="tag t-fees">THC or HBL</span></li>
+          <li tabindex="0" id="ac-other"><span class="name">Other Pay</span></li>
+          <li tabindex="0" id="ac-cm" data-src="rule"><span class="name">CM (commission)</span><span class="tag t-rule">$50 rule</span></li>
+
+          <li class="grp" aria-hidden="true">Revenue</li>
+          <li tabindex="0" id="ac-inv" data-src="fees"><span class="name">INV (revenue without VAT 10%)</span><span class="tag t-fees">Service fees</span></li>
+          <li tabindex="0" id="ac-reim" data-src="fees"><span class="name">REIM</span><span class="tag t-fees">Service fees</span></li>
+          <li tabindex="0" id="ac-vat" data-src="fees"><span class="name">VAT 10%</span><span class="tag t-fees">Service fees</span></li>
+          <li tabindex="0" id="ac-dn" data-src="dn"><span class="name">DN</span><span class="tag t-dn">DN total</span></li>
+
+          <li class="grp" aria-hidden="true">Result</li>
+          <li tabindex="0" id="ac-net" data-src="rule"><span class="name"><strong>Net Profit</strong></span><span class="tag t-rule">Formula</span></li>
+          <li tabindex="0" id="ac-mark"><span class="name">Mark</span></li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- RIGHT: rules & credit note -->
+    <div class="col right">
+      <section class="card rule" id="r-port">
+        <h2>Port</h2>
+        <p>Port No, Port Code and Port Name come from the port list.</p>
+      </section>
+
+      <section class="card rule" id="r-invdate">
+        <h2>Invoice date</h2>
+        <p>Invoice date is <b>1 day after the declare date</b>.</p>
+      </section>
+
+      <section class="card rule" id="r-workday">
+        <h2>Working days</h2>
+        <p>Skip Saturday, Sunday and public holidays.</p>
+      </section>
+
+      <section class="card chea">
+        <h2>Chea Payment (Credit Note)</h2>
+        <ul>
+          <li>Declare No</li>
+          <li>Declare Date</li>
+          <li>Client</li>
+          <li>CTNS</li>
+          <li>Weight (Gross Weight)</li>
+          <li>CBM</li>
+          <li>Port</li>
+          <li>BL No</li>
+          <li class="total" id="cp-total">Total amount Chea paid on behalf</li>
+        </ul>
+      </section>
+
+      <section class="card rule" id="r-cm">
+        <h2>CM (commissions)</h2>
+        <p><b>50 USD</b> per shipment for every factory, except JR Apparel.</p>
+      </section>
+
+      <section class="card rule" id="r-net">
+        <h2>Net profit</h2>
+        <div class="formula">
+          <span class="plus">[</span> <code>INV (tax)</code> + <code>REIM</code> + <code>DN</code> <span class="plus">]</span><br>
+          <span class="minus">−</span>
+          <span class="minus">[</span> <code>Clear Fee</code> + <code>THC</code> + <code>CM</code> + <code>Other Pay</code> <span class="minus">]</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="foot">Coloured bars on the sheet show which source fills each column. LOLO at Port and the Debit Note line items have no direct column; only the Debit Note total flows into DN.</p>
+</div>
+
+<script>
+(function(){
+  // [from, to, colourVar, fromSide, toSide]
+  const links = [
+    ["rs-declareno","ac-declare","--c-record"],
+    ["rs-declaredate","ac-date","--c-record"],
+    ["rs-client","ac-client","--c-record"],
+    ["fe-thc","ac-thc","--c-fees"],
+    ["fe-thc","ac-reim","--c-fees"],
+    ["fe-import","ac-inv","--c-fees"],
+    ["fe-customs","ac-inv","--c-fees"],
+    ["fe-warehouse","ac-inv","--c-fees"],
+    ["fe-import","ac-vat","--c-fees"],
+    ["fe-customs","ac-vat","--c-fees"],
+    ["fe-warehouse","ac-vat","--c-fees"],
+    ["dn-total","ac-dn","--c-dn"],
+    ["ac-portno","r-port","--c-rule"],
+    ["ac-portcode","r-port","--c-rule"],
+    ["ac-portname","r-port","--c-rule"],
+    ["ac-invdate","r-invdate","--c-rule"],
+    ["ac-exrate","r-workday","--c-rule"],
+    ["cp-total","ac-clear","--c-chea","left","right"],
+    ["r-cm","ac-cm","--c-rule","left","right"],
+    ["ac-net","r-net","--c-rule"]
+  ];
+  const board = document.getElementById("board");
+  const svg = document.getElementById("wires");
+  const NS = "http://www.w3.org/2000/svg";
+  let paths = [];
+
+  function anchor(el, side, b){
+    const r = el.getBoundingClientRect();
+    const x = side === "left" ? r.left - b.left : r.right - b.left;
+    // cards (rules) connect near their heading; rows connect at their middle
+    const y = el.tagName === "SECTION" ? r.top - b.top + 20 : r.top - b.top + r.height/2;
+    return {x, y};
+  }
+
+  function draw(){
+    svg.innerHTML = ""; paths = [];
+    if (getComputedStyle(svg).display === "none") return;
+    const b = board.getBoundingClientRect();
+    svg.setAttribute("viewBox", `0 0 ${b.width} ${b.height}`);
+    const css = getComputedStyle(document.documentElement);
+    const defs = document.createElementNS(NS,"defs");
+    svg.appendChild(defs);
+    const made = {};
+    links.forEach(([f,t,c,fs="right",ts="left"])=>{
+      const a = document.getElementById(f), z = document.getElementById(t);
+      if(!a||!z) return;
+      const col = css.getPropertyValue(c).trim();
+      const mid = "m" + c.replace(/[^a-z]/g,"");
+      if(!made[mid]){
+        const m = document.createElementNS(NS,"marker");
+        m.setAttribute("id",mid); m.setAttribute("viewBox","0 0 10 10");
+        m.setAttribute("refX","9"); m.setAttribute("refY","5");
+        m.setAttribute("markerWidth","7"); m.setAttribute("markerHeight","7"); m.setAttribute("orient","auto-start-reverse");
+        const p = document.createElementNS(NS,"path");
+        p.setAttribute("d","M0,0 L10,5 L0,10 z"); p.setAttribute("fill",col);
+        m.appendChild(p); defs.appendChild(m); made[mid]=1;
+      }
+      const p1 = anchor(a,fs,b), p2 = anchor(z,ts,b);
+      const dx = Math.max(30, Math.abs(p2.x - p1.x) * 0.5);
+      const c1x = fs === "right" ? p1.x + dx : p1.x - dx;
+      const c2x = ts === "left" ? p2.x - dx : p2.x + dx;
+      const path = document.createElementNS(NS,"path");
+      path.setAttribute("d",`M${p1.x},${p1.y} C${c1x},${p1.y} ${c2x},${p2.y} ${p2.x},${p2.y}`);
+      path.setAttribute("stroke",col);
+      path.setAttribute("marker-end",`url(#${mid})`);
+      path.dataset.from = f; path.dataset.to = t;
+      svg.appendChild(path); paths.push(path);
+    });
+  }
+
+  function focusRow(id){
+    paths.forEach(p=>{
+      const on = p.dataset.from === id || p.dataset.to === id;
+      p.classList.toggle("hot", on);
+      p.classList.toggle("dim", !on);
+    });
+  }
+  function clear(){ paths.forEach(p=>p.classList.remove("hot","dim")); }
+
+  document.querySelectorAll(".sheet li[id], .col.left li[id], .col.right [id]").forEach(el=>{
+    el.addEventListener("mouseenter",()=>focusRow(el.id));
+    el.addEventListener("mouseleave",clear);
+    el.addEventListener("focus",()=>focusRow(el.id));
+    el.addEventListener("blur",clear);
+  });
+
+  const redraw = ()=>requestAnimationFrame(draw);
+  window.addEventListener("resize", redraw);
+  try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw); } catch(e){}
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
+  new ResizeObserver(redraw).observe(board);
+  redraw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+/* An export invoice in "Cargo, Pricing & FOB": head bar, summary boxes, then the line table.
+   Open / close animates with the global .cargo-inv / .cargo-inv-details classes. */
+.inv {
+  border-radius: 12px;
+}
+
+/* ---------- Head ---------- */
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px 10px;
+  min-width: 0;
+  /* The whole head opens and closes the invoice's line items. */
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+.head:hover {
+  background: var(--bg-subtle);
+}
+.head:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+}
+/* The open / closed arrow (part of the head, which takes the click). */
+.toggle {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  color: var(--text-secondary);
+}
+.toggle svg {
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease;
+}
+.inv:global(.open) .toggle svg {
+  transform: none;
+}
+.head:hover .toggle {
+  color: var(--text-primary);
+}
+.headIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+.headIcon svg {
+  width: 20px;
+  height: 20px;
+}
+.headTitle {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+/* Import: invoice no. and date on the head's line, each name beside its box. */
+.headFields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  min-width: 0;
+  margin-left: 14px;
+  cursor: default;
+}
+.headField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.headField .boxInput {
+  width: 190px;
+  height: 36px;
+}
+.headField input[type='date'] {
+  width: 160px;
+}
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.iconBtn svg {
+  width: 15px;
+  height: 15px;
+}
+.iconBtn:hover {
+  background: var(--status-exception-bg);
+  color: var(--status-exception-fg);
+}
+.removeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--status-exception-fg) 20%, transparent);
+  border-radius: 8px;
+  background: var(--status-exception-bg);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--status-exception-fg);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+.removeBtn svg {
+  width: 15px;
+  height: 15px;
+}
+.removeBtn:hover {
+  border-color: var(--status-exception-fg);
+  background: color-mix(in srgb, var(--status-exception-fg) 16%, var(--status-exception-bg));
+}
+
+/* ---------- Summary boxes ---------- */
+.boxes {
+  display: grid;
+  grid-template-columns:
+    minmax(130px, 1.3fr) minmax(140px, 1.3fr) minmax(110px, 1.1fr) repeat(5, minmax(84px, 1fr))
+    minmax(150px, 1.6fr);
+  gap: 12px;
+  padding: 0 14px 14px;
+}
+/* Name above, box below, like the shipment form's fields (e.g. Invoice / THC No.). */
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+.box > span {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Item totals: read-only, so a tinted box rather than a white field, with a "can't edit" cursor. */
+.box > b {
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-inset) 45%, var(--bg-surface));
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.boxInput {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.boxInput:focus {
+  border-color: var(--accent-primary);
+}
+.boxInput[aria-invalid='true'] {
+  border-color: var(--status-exception-fg);
+}
+.strong {
+  font-weight: 700;
+}
+/* The invoice amount: the accent-tinted box. */
+.fobBox > b {
+  border-color: color-mix(in srgb, var(--accent-primary) 25%, var(--border-subtle));
+  background: color-mix(in srgb, var(--status-progress-bg) 70%, var(--bg-surface));
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+.err {
+  padding: 0 14px 10px;
+}
+
+/* ---------- Line table ---------- */
+.panel {
+  padding: 14px 14px 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+.panelTitle {
+  margin-bottom: 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.tableWrap {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+/* Column header: a soft rounded band. */
+.table th {
+  padding: 9px 10px;
+  background: var(--bg-inset, var(--bg-subtle));
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: left;
+  white-space: nowrap;
+}
+.table th:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.table th:last-child {
+  border-radius: 0 8px 8px 0;
+}
+.table td {
+  padding: 2px 4px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+/* No rule under a group's last line: the next description band separates groups. */
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+.table tbody tr:hover td {
+  background: color-mix(in srgb, var(--bg-inset, var(--bg-subtle)) 60%, transparent);
+}
+.table tbody tr:hover td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.table tbody tr:hover td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+/* Row remove buttons stay out of the way until the row is hovered or focused. */
+.table .iconBtn {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.table tr:hover .iconBtn,
+.table tr:focus-within .iconBtn,
+.table .iconBtn:focus-visible {
+  opacity: 1;
+}
+.table .r,
+.table th.r {
+  text-align: right;
+}
+/* A typed cell: plain text until hovered or focused. */
+.cell {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  outline: none;
+}
+.cell::placeholder {
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+.cell:hover {
+  border-color: var(--border-subtle);
+  background: var(--bg-surface);
+}
+.cell:focus {
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
+}
+.cell[aria-invalid='true'] {
+  border-color: var(--status-exception-fg);
+}
+.num {
+  text-align: right;
+}
+.lineTotal {
+  padding-right: 10px !important;
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.act {
+  width: 36px;
+}
+/* Import items: the item picker gets the room; CDC no., material and unit follow it. */
+/* Import items: fixed column widths (the colgroup), wide enough to scroll before squeezing. */
+.table.tableImport {
+  table-layout: fixed;
+  min-width: 1080px;
+}
+.tableImport td,
+.tableImport th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tableImport .cell {
+  height: 34px;
+  text-overflow: ellipsis;
+}
+/* Rows line up on the item picker, not on its middle: the balance under it only adds height
+   below. Some room above each row, so the picker doesn't touch the rule or header. */
+.table.tableImport tbody td {
+  vertical-align: top;
+  padding-top: 10px;
+  padding-bottom: 6px;
+}
+/* Plain-text cells: down by a field's padding and border, onto the same line as the fields. */
+.table.tableImport tbody td.lineTotal {
+  padding-top: 19px;
+}
+.table.tableImport tbody td.act {
+  padding-top: 13px;
+}
+.table.tableImport tbody tr.overRow td {
+  padding-top: 0;
+}
+select.cell {
+  cursor: pointer;
+}
+.auto,
+.auto:hover,
+.auto:focus {
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: default;
+}
+.balance {
+  display: block;
+  padding: 0 6px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.balance[data-over='true'] {
+  color: var(--status-exception-fg);
+}
+.table tbody tr.overRow td {
+  padding: 2px 4px 8px;
+}
+/* The description heading each group of lines: a tinted band with an accent bar. */
+.descRow td {
+  padding: 12px 0 4px;
+  border-bottom: none;
+}
+.table tbody tr.descRow:hover td {
+  background: none;
+}
+.descInner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 4px 2px 12px;
+  border-left: 3px solid var(--accent-primary);
+  border-radius: 4px 8px 8px 4px;
+  background: color-mix(in srgb, var(--status-progress-bg) 55%, var(--bg-surface));
+}
+.descLbl {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+}
+.descInner .cell {
+  font-weight: 700;
+}
+.descInner .cell:hover,
+.descInner .cell:focus {
+  background: var(--bg-surface);
+}
+/* ---------- Description ⋯ menu ---------- */
+.menuWrap {
+  flex-shrink: 0;
+}
+.dotsBtn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.dotsBtn:hover,
+.dotsBtn[aria-expanded='true'] {
+  border-color: var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--accent-primary);
+}
+/* The section toolbar's ⋯ (Excel template): a square cargo-btn. */
+.dotsToolbar {
+  justify-content: center;
+  padding: 8px 9px;
+}
+.menu {
+  position: fixed;
+  z-index: 60;
+  min-width: 200px;
+  padding: 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+}
+/* A thin line between groups of menu items. */
+.menuSep {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--border-subtle);
+}
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+}
+.menuItem svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--accent-primary);
+}
+.menuItem:hover:not(:disabled) {
+  background: var(--bg-inset, var(--bg-subtle));
+}
+.menuDanger,
+.menuDanger svg {
+  color: var(--status-exception-fg);
+}
+.menuDanger:hover:not(:disabled) {
+  background: var(--status-exception-bg);
+}
+.menuItem:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- Add buttons ---------- */
+.foot {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--status-progress-bg);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  cursor: pointer;
+}
+.addBtn svg {
+  width: 14px;
+  height: 14px;
+}
+.addBtn:hover {
+  border-color: var(--accent-primary);
+}
+
+@media (max-width: 1250px) {
+  .boxes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .fobBox {
+    grid-column: span 2;
+  }
+}

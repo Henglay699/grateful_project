@@ -1,0 +1,165 @@
+/* Client Details: Suppliers and Consignees, each a full-width card of address tiles that wrap. */
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+/* As the other cards' titles (.card-header-row h3). */
+.titleBlock h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+.sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.missing {
+  color: var(--status-exception-fg);
+}
+.count {
+  margin-left: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.search {
+  width: 240px;
+  max-width: 100%;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+/* A name + address (click to set the address) with its delete button in the corner. */
+.tile {
+  position: relative;
+  display: flex;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-surface-elevated);
+  transition: border-color 0.15s;
+}
+.tile:hover {
+  border-color: var(--border-strong);
+}
+.item {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 38px 12px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font-family: var(--font-main);
+  text-align: left;
+  cursor: pointer;
+}
+.item:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+}
+.item:disabled {
+  cursor: default;
+}
+.item b {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+.address {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.noAddress {
+  align-self: flex-start;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.tile:hover .delete,
+.delete:focus-visible {
+  opacity: 1;
+  color: var(--status-exception-fg);
+  border-color: var(--border-subtle);
+}
+/* Touch screens have no hover: keep delete visible. */
+@media (hover: none) {
+  .delete {
+    opacity: 1;
+  }
+}
+.delete:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.more {
+  display: block;
+  margin: 12px auto 0;
+  padding: 6px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--bg-surface);
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.more:hover {
+  color: var(--text-primary);
+}
+.muted {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+}

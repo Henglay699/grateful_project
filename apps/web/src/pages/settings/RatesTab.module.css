@@ -1,0 +1,355 @@
+/* Settings → Rates: three summary boxes over one detail card. */
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px 20px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.box:hover {
+  border-color: var(--border-strong);
+}
+.box[data-active] {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.boxHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.chip {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--status-completed-bg);
+  color: var(--status-completed-fg);
+}
+.boxTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.boxTitle {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.boxSub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boxBody {
+  flex: 1;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+.figurePair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.figureLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.figureValue {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.15;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.figureValue[data-size='lg'] {
+  font-size: 28px;
+}
+.figureValue small {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-tertiary);
+}
+
+.metalList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.metalList li {
+  display: grid;
+  grid-template-columns: 20px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+}
+.metalName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.metalValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Metal icons (public/gold.png, silver.png, platinum.png). */
+.metalIcon,
+.metalIconSm {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.metalIcon {
+  width: 34px;
+  height: 34px;
+}
+.metalIconSm {
+  width: 20px;
+  height: 20px;
+}
+
+.boxFoot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+.boxActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.boxActions :global(.filter-btn) {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.sync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  min-width: 0;
+}
+.sync > span:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sync a {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-completed-fg);
+  box-shadow: 0 0 0 3px var(--status-completed-bg);
+}
+.sync[data-tone='error'] {
+  color: var(--status-exception-fg);
+}
+.sync[data-tone='error'] .dot {
+  background: var(--status-exception-fg);
+  box-shadow: 0 0 0 3px var(--status-exception-bg);
+}
+
+/* Price went up = amber, down = cyan (the status-pill tones). */
+.change {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+.change[data-dir='up'] {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+}
+.change[data-dir='down'] {
+  background: var(--status-completed-bg);
+  color: var(--status-completed-fg);
+}
+.rowDiff {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.rowDiff[data-dir='up'] {
+  color: var(--status-pending-fg);
+}
+.rowDiff[data-dir='down'] {
+  color: var(--status-completed-fg);
+}
+
+.link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+.link:hover {
+  text-decoration: underline;
+}
+.muted {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.loading {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Metals panel: one plain card per metal. */
+.metalTiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 20px 22px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+}
+
+.tileHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tileName {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--text-primary);
+}
+.symbol {
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+}
+.tileMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.weights {
+  width: 100%;
+  margin-top: 2px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.weights th,
+.weights td {
+  padding: 11px 0;
+  border-top: 1px dashed var(--border-subtle);
+  font-size: 13px;
+}
+.weights th {
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.weights td {
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.weights td:last-child {
+  padding-left: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+/* First row (1 troy oz) is the headline price. */
+.weights tr:first-child > * {
+  padding-top: 4px;
+  padding-bottom: 14px;
+  border-top: 0;
+}
+.weights tr:first-child td:nth-child(2) {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+.weights tr:first-child td:last-child {
+  font-size: 14px;
+}
+
+@media (max-width: 1200px) {
+  .boxes,
+  .metalTiles {
+    grid-template-columns: 1fr;
+  }
+}

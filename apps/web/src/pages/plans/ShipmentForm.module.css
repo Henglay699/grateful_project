@@ -1,0 +1,540 @@
+/* Shipment create / edit page. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 8px;
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.badge[data-tone='done'] {
+  background: var(--status-completed-bg);
+  color: var(--status-completed-fg);
+}
+.badge[data-tone='progress'] {
+  background: var(--status-progress-bg);
+  color: var(--status-progress-fg);
+}
+.badge[data-tone='pending'] {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+}
+.badge[data-tone='exception'] {
+  background: var(--status-exception-bg);
+  color: var(--status-exception-fg);
+}
+.badge[data-tone='draft'] {
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 0;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+.meta strong {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+/* Client · shipment · updated, divided by thin rules. */
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.metaItem + .metaItem {
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border-subtle);
+}
+.metaItem svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.page label.label svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+/* Field labels: icon + name in sentence case (outranks the global uppercase label). */
+.page label.label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-primary);
+}
+.page label.label svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-tertiary);
+}
+/* Status: one tile per status, its badge on the right and how it is worked out below. */
+.statusTile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  /* A light tint of the subtle grey, so the tiles stay soft on the white card. */
+  background: color-mix(in srgb, var(--bg-subtle) 40%, var(--bg-surface));
+}
+.statusHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.statusIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+.statusIcon svg {
+  width: 15px;
+  height: 15px;
+}
+.statusLabel {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.statusHint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+
+/* Customs declarations: equal columns across the card (Clearance Port · Declare No. · Date). */
+.declGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--decl-cols, 2), minmax(0, 1fr));
+  gap: 20px 18px;
+}
+.declGrid[data-cols='3'] {
+  --decl-cols: 3;
+}
+/* A later declaration's heading: "Declaration 2" and its Remove button. */
+.declHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+@media (max-width: 640px) {
+  .declGrid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Field values in regular weight, like typed text: dropdowns (native and searchable) and
+   their option lists included. Labels stay bold. */
+.page :global(.form-select-box),
+.page [role='listbox'] li {
+  font-weight: 400;
+}
+
+/* A Select's box wrapper: adds nothing to the layout. */
+.plain {
+  display: contents;
+}
+/* A box with a tag at its right end (Quantity's unit). */
+.affix {
+  position: relative;
+}
+.affix > input {
+  padding-right: 72px;
+}
+.suffix {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-left: 1px solid var(--border-subtle);
+  border-radius: 0 7px 7px 0;
+  background: var(--bg-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+/* ---------- Section cards ---------- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.stack > :global(.cx-card + .cx-card) {
+  margin-top: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  gap: 18px;
+}
+.note {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+/* "Unsaved changes" beside the badges. */
+.dirty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.dirty::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    --cols: 2 !important;
+  }
+}
+@media (max-width: 640px) {
+  .grid {
+    --cols: 1 !important;
+  }
+  .grid > * {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* A multi-line field (the remark): grows with the text, resizable by height only. */
+.textarea {
+  display: block;
+  min-height: 112px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* =========================================================
+   Page layout: client title + icon toolbar, milestones, tabs
+========================================================= */
+.topBar {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-strong);
+}
+.topBar .titleRow {
+  margin-top: 0;
+}
+.titleCaps {
+  text-transform: uppercase;
+}
+/* Reference · import • by sea • terms · updated, in small capitals. */
+.metaCaps {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  align-self: center;
+}
+/* A square icon button (⋯, Export, Save, Next). Doubled so it outranks the ⋯ menu's own class. */
+.iconBtn.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.iconBtn svg {
+  width: 16px;
+  height: 16px;
+}
+.iconBtn.iconBtn:hover:not(:disabled),
+.iconBtn.iconBtn[aria-expanded='true'] {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.iconBtn.iconBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--border-subtle);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Milestones ---------- */
+.track {
+  display: flex;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mile {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  text-align: center;
+}
+.mile:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 13px;
+  left: calc(50% + 20px);
+  right: calc(-50% + 20px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--border-subtle);
+}
+.mile[data-linked='true']::after {
+  background: var(--accent-primary);
+}
+.mileDot {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-surface);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.mileDot svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 3;
+}
+.mileLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.mile[data-state='done'] .mileDot {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #fff;
+}
+.mile[data-state='done'] .mileLabel {
+  color: var(--text-secondary);
+}
+.mile[data-state='current'] .mileDot {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #04202a;
+  box-shadow: 0 0 0 5px var(--status-completed-bg);
+}
+.mile[data-state='current'] .mileLabel {
+  color: var(--accent-primary);
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  margin-top: 12px;
+  border-bottom: 1px solid var(--border-strong);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.tab {
+  justify-self: center;
+  position: relative;
+  padding: 10px 6px 12px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tab:hover {
+  color: var(--text-primary);
+}
+.tab[aria-selected='true'] {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+/* The underline sits on the tabs' rule, as wide as the label. */
+.tab[aria-selected='true']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-primary);
+}
+.tab[data-error='true'] {
+  color: var(--status-exception-fg);
+}
+.tab[data-error='true']::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: middle;
+}
+.tab:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+
+/* The client, the shipment's key field, in a soft yellow. */
+.clientHi {
+  background-color: color-mix(in srgb, var(--status-pending-bg) 70%, var(--bg-surface)) !important;
+  border-color: color-mix(in srgb, var(--status-pending-fg) 25%, transparent) !important;
+}
+.refBox {
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+/* Viewing a saved shipment (or view-only): fields read normally, not greyed out. */
+.viewing :is(input:not([type='radio'], [type='checkbox']), select, textarea):disabled,
+.viewing button:global(.form-select-box):disabled {
+  opacity: 1;
+  cursor: default;
+}
+/* …while its buttons (+ Add Invoice, + Add Declaration…) show they wait for Edit. */
+.viewing button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+  .mileLabel {
+    font-size: 10px;
+  }
+}
+
+/* The Workflow tab leads the form's tabs, set apart by a rule. */
+.workflowTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.workflowTab::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}
+
+/* Phones: the tabs keep their natural width and scroll sideways instead of overlapping. */
+@media (max-width: 760px) {
+  .tabs {
+    grid-auto-columns: max-content;
+    gap: 18px;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+}

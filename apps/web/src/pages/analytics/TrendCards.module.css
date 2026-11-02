@@ -1,0 +1,100 @@
+/* Analytics → Monthly Shipment Volume: header, summary strip, Bklit bar chart. */
+.volHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.volTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.volSub {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 16px 0 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+/* Label and value on the left, the icon chip on the right. */
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+}
+.statText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.statIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--text-primary);
+}
+.statIcon svg {
+  width: 24px;
+  height: 24px;
+}
+.stat + .stat {
+  border-left: 1px solid var(--border-subtle);
+}
+.stat span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.stat b {
+  font-size: 17px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.chart {
+  margin-top: 14px;
+}
+
+@media (max-width: 1180px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stat:nth-child(3) {
+    border-left: 0;
+  }
+  .stat:nth-child(n + 3) {
+    border-top: 1px solid var(--border-subtle);
+  }
+}

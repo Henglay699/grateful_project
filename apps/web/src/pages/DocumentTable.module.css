@@ -1,0 +1,59 @@
+/* Whole row opens the preview. */
+.row {
+  cursor: pointer;
+}
+.row:hover td {
+  background: var(--bg-subtle);
+}
+
+.title {
+  all: unset;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.title:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.file {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.action {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.action svg {
+  width: 16px;
+  height: 16px;
+}
+.action:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.danger:hover {
+  color: var(--status-exception-fg);
+  border-color: var(--status-exception-fg);
+  background: var(--status-exception-bg);
+}

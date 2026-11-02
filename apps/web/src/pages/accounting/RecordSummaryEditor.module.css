@@ -1,0 +1,204 @@
+/* Record Summary editor: the Credit Noted editor's frame, with the accounting engine's
+   Record Summary form inside (folding panels, amber ledger numbers, boxed line rows). */
+
+/* Folding panels: grey header bar with a caret. */
+.panel {
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.panelHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.panelHead::after {
+  content: '▾';
+  font-size: 14px;
+  color: var(--text-tertiary);
+  transition: transform 0.2s;
+}
+.open .panelHead {
+  border-bottom-color: var(--border-subtle);
+}
+.open .panelHead::after {
+  transform: rotate(180deg);
+}
+.panelHead:disabled {
+  cursor: default;
+}
+.panelBody {
+  padding: 14px;
+}
+
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.grid2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+/* Quantity | Unit, side by side in one cell. */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  margin-bottom: 8px;
+}
+.item > span:first-child {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* INV / DIS / DN: they come from the Monthly Ledger, so they stand out in amber. */
+/* Synced from the Monthly Ledger: can't be typed or focused. */
+.amber .frozen {
+  cursor: not-allowed;
+}
+.amber .frozen:focus {
+  outline: none;
+  box-shadow: none;
+}
+.amber .frozen::placeholder {
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.75;
+}
+.amber > span:first-child {
+  color: var(--accent-primary);
+}
+.amber :global(.form-field-box) {
+  border-color: rgba(252, 211, 77, 0.55);
+  background: rgba(245, 158, 11, 0.12);
+  color: #fcd34d;
+  font-weight: 700;
+}
+:global([data-theme='light']) .amber :global(.form-field-box) {
+  border-color: #fcd34d;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.hint {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+/* Line items: one boxed row each. */
+.rowItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-canvas);
+}
+.rowItem :global(.form-field-box) {
+  box-sizing: border-box;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+.no {
+  flex: 0 0 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.desc {
+  flex: 2 1 0;
+  min-width: 0;
+}
+.qty {
+  flex: 0 0 48px;
+}
+.unit {
+  flex: 0 0 96px;
+  box-sizing: border-box;
+  height: 32px;
+  padding: 0 24px 0 8px;
+  font-size: 12px;
+}
+.price {
+  flex: 0 0 76px;
+}
+.mark {
+  flex: 1 1 0;
+  min-width: 70px;
+  max-width: 130px;
+}
+.del {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid color-mix(in srgb, var(--status-exception-fg) 45%, transparent);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--status-exception-fg);
+  font-size: 13px;
+  cursor: pointer;
+}
+.del:hover {
+  background: var(--status-exception-bg);
+}
+.addItem {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.addItem:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+@media (max-width: 1400px) {
+  .grid3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

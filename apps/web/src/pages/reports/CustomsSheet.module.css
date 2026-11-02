@@ -1,0 +1,98 @@
+/* The import / export report on A4 portrait, black on white regardless of the app theme. */
+.sheet {
+  --km-title: 'Khmer OS Muol Light', 'Khmer OS Muol', 'GS Moul', serif;
+  --km-body:
+    'Khmer OS Battambang', 'Khmer OS Siemreap', 'GS Siemreap', 'GS Khmer', Arial, sans-serif;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 12mm 10mm 14mm;
+  background: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 8pt;
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.18);
+}
+.title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--km-title);
+  font-size: 12pt;
+  font-weight: 400;
+  line-height: 2;
+}
+.subtitle {
+  margin: 0 0 8px;
+  text-align: center;
+  font-family: var(--km-body);
+  font-size: 10pt;
+  line-height: 1.9;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.table th,
+.table td {
+  border: 0.5pt solid #000;
+  padding: 2px 4px;
+  overflow-wrap: anywhere;
+}
+.table thead {
+  display: table-header-group;
+}
+.table tr {
+  break-inside: avoid;
+}
+.kh th {
+  font-family: var(--km-body);
+  font-size: 8pt;
+  font-weight: 400;
+  line-height: 1.8;
+}
+.en th {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 8pt;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.c {
+  text-align: center;
+}
+.r {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.total td {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 9.5pt;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+.sign {
+  break-inside: avoid;
+  width: 45%;
+  margin: 14px 0 0 auto;
+  text-align: center;
+  font-family: var(--km-body);
+  font-size: 11pt;
+  line-height: 2;
+}
+.name {
+  margin-top: 64px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+}
+
+@media print {
+  .sheet {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}

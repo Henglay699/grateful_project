@@ -1,0 +1,148 @@
+/* Visually hidden but still focusable, so Tab + Enter/Space opens the browse dialog. */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 16px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+/* Children ignore the pointer so dragging over them doesn't fire dragleave on the zone. */
+.zone > * {
+  pointer-events: none;
+}
+.zone:hover,
+.dragging,
+.input:focus-visible + .zone {
+  border-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 7%, var(--bg-subtle));
+}
+.zoneIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  color: var(--accent-primary);
+}
+.zoneIcon svg {
+  width: 20px;
+  height: 20px;
+}
+.prompt {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.prompt strong {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+.hint {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+.chosen {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+}
+.input:focus-visible + .chosen {
+  border-color: var(--accent-primary);
+}
+.fileIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  color: var(--accent-primary);
+}
+.fileIcon svg {
+  width: 18px;
+  height: 18px;
+}
+.fileText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.fileName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fileMeta {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+.change {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.change:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+}
+.remove {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.remove:hover {
+  color: var(--status-exception-fg);
+  background: var(--status-exception-bg);
+}
+.remove svg {
+  width: 15px;
+  height: 15px;
+}
+
+.error {
+  display: block;
+  margin-top: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--status-exception-fg);
+}

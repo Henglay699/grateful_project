@@ -1,0 +1,237 @@
+/* Overview KPI cards: tinted icon chip + label, big value with a change pill, and a mini
+   chart (bars, sparkline or ring) in the card's own colour. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.card {
+  --tone: var(--accent-primary);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 150px;
+  padding: 18px 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+}
+.card[data-tone='cyan'] {
+  --tone: #06b6d4;
+}
+.card[data-tone='sky'] {
+  --tone: #22d3ee;
+}
+.card[data-tone='blue'] {
+  --tone: #60a5fa;
+}
+.card[data-tone='emerald'] {
+  --tone: #10b981;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chip {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 15%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tone) 25%, transparent);
+}
+.label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  color: var(--text-secondary);
+}
+.open {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.open:hover {
+  background: var(--tone);
+  border-color: var(--tone);
+  color: #fff;
+}
+
+.body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.figures {
+  flex-shrink: 0;
+}
+.value {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 9px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.delta {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--status-completed-fg);
+  background: var(--status-completed-bg);
+}
+.delta[data-up='false'] {
+  color: var(--status-exception-fg);
+  background: var(--status-exception-bg);
+}
+.delta[data-warn='true'] {
+  color: var(--status-pending-fg);
+  background: var(--status-pending-bg);
+}
+.sub {
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Gives way before the figure and "vs last month" do. */
+.chart {
+  flex: 0 1 112px;
+  min-width: 60px;
+  height: 52px;
+}
+.chart:empty {
+  display: none;
+}
+
+/* Mini month columns; the current month is solid, earlier ones faded. */
+.bars {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+.bars > span {
+  flex: 1;
+  height: var(--h);
+  border-radius: 4px 4px 2px 2px;
+  background: color-mix(in srgb, var(--tone) 30%, transparent);
+  transition: background 0.15s ease;
+}
+.bars > span[data-now] {
+  background: linear-gradient(
+    180deg,
+    var(--tone),
+    color-mix(in srgb, var(--tone) 65%, transparent)
+  );
+  box-shadow: 0 0 12px -2px color-mix(in srgb, var(--tone) 70%, transparent);
+}
+.bars > span:hover {
+  background: color-mix(in srgb, var(--tone) 60%, transparent);
+}
+
+/* Sparkline cards (Import / Export): a compact sparkline in the chart slot, a little wider
+   than the bars; its hovered month drives the figure. */
+.sparkChart {
+  flex-basis: 150px;
+  margin-right: -4px;
+}
+
+/* Clearance ring. */
+.ring {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  margin-left: auto;
+}
+.ring svg {
+  width: 100%;
+  height: 100%;
+}
+.ringTrack,
+.ringFill {
+  fill: none;
+  stroke-width: 6;
+}
+.ringTrack {
+  stroke: color-mix(in srgb, var(--tone) 16%, transparent);
+}
+.ringFill {
+  stroke: var(--tone);
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.6s ease;
+}
+.ringText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+.ringText small {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+
+.skeleton {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Sized by the Overview's own width (see #view-overview), so the sidebar state counts. */
+@container overview (max-width: 1100px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container overview (max-width: 540px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

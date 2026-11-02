@@ -1,0 +1,101 @@
+.wrap {
+  position: relative;
+}
+.pop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 60;
+  width: min(380px, calc(100vw - 24px));
+  border-radius: 10px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  animation: drop 0.14s ease-out;
+}
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 14px;
+  color: var(--text-primary);
+}
+.head a {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+.scroll {
+  max-height: 420px;
+  overflow-y: auto;
+}
+.item {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.item:hover {
+  background: var(--bg-subtle);
+}
+.sev {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--status-progress-fg);
+}
+.sev[data-severity='ERROR'] {
+  background: var(--status-exception-fg);
+}
+.sev[data-severity='WARNING'] {
+  background: var(--status-pending-fg);
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.text b {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+.text span {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+.empty {
+  padding: 24px 14px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+.more {
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.more a {
+  color: var(--accent-primary);
+  font-weight: 700;
+}

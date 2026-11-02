@@ -1,0 +1,398 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791204687920,
+      "tag": "0000_init",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791204692454,
+      "tag": "0001_views_and_triggers",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791251957157,
+      "tag": "0002_billing_shipment_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791690941862,
+      "tag": "0003_user_access",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791696377422,
+      "tag": "0004_customs_broker",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791700287982,
+      "tag": "0005_credit_note_review",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791715431437,
+      "tag": "0006_credit_note_messages",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791724120891,
+      "tag": "0007_client_cdc",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791782376345,
+      "tag": "0008_market_prices",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791791332564,
+      "tag": "0009_charge_units",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791793661536,
+      "tag": "0010_official_receipts",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1792117965766,
+      "tag": "0011_holidays_dis_year",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1792135911274,
+      "tag": "0012_released_numbers",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1792204284592,
+      "tag": "0013_import_cargo_lines",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792205576870,
+      "tag": "0014_shipment_status_auto",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1792247954989,
+      "tag": "0015_clear_fee_payments",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792309383629,
+      "tag": "0016_record_summary_permissions",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1792310360505,
+      "tag": "0017_client_address_km",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1792334281696,
+      "tag": "0018_record_summary_review",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792377128575,
+      "tag": "0019_invoice_items_cut_stock",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1792566722279,
+      "tag": "0020_credit_note_reviewed",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1792566782279,
+      "tag": "0021_client_own_consignee",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1792649361111,
+      "tag": "0022_record_summary_messages",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1792719245921,
+      "tag": "0023_container_seal_plans",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1792720155435,
+      "tag": "0024_seal_plans_standalone",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1792724446150,
+      "tag": "0025_seal_plan_permissions",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1792726073946,
+      "tag": "0026_client_notes",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1792726903197,
+      "tag": "0027_suppliers",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1792727470694,
+      "tag": "0028_supplier_hidden",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1792736857651,
+      "tag": "0029_chat",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1792739272900,
+      "tag": "0030_chat_mentions",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1792739332900,
+      "tag": "0031_reports_permission",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1792739392900,
+      "tag": "0032_reports_write_permission",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1792768757733,
+      "tag": "0033_payroll_months",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1792807532858,
+      "tag": "0034_mih_months",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1792833316244,
+      "tag": "0035_record_summary_cbm_text",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1792833327796,
+      "tag": "0036_shv_port_short_name",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1792938103907,
+      "tag": "0037_billing_port_short_names",
+      "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1793005341560,
+      "tag": "0038_air_pending_declare_no",
+      "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "7",
+      "when": 1793239168701,
+      "tag": "0039_co_records",
+      "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1793327594734,
+      "tag": "0040_moc_co_forms",
+      "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1793336422906,
+      "tag": "0041_all_countries",
+      "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "7",
+      "when": 1793361400053,
+      "tag": "0042_holiday_name_kh",
+      "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "7",
+      "when": 1793361732816,
+      "tag": "0043_holiday_drop_subdecree_note",
+      "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "7",
+      "when": 1793380411712,
+      "tag": "0044_shipment_received_document_date",
+      "breakpoints": true
+    },
+    {
+      "idx": 45,
+      "version": "7",
+      "when": 1793411612392,
+      "tag": "0045_co_status_stages",
+      "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "7",
+      "when": 1793418101577,
+      "tag": "0046_shipment_air_schedule",
+      "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "7",
+      "when": 1793419780585,
+      "tag": "0047_shipment_do_date",
+      "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "7",
+      "when": 1793424607898,
+      "tag": "0048_user_client_scopes",
+      "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "7",
+      "when": 1793437481792,
+      "tag": "0049_container_truck_no",
+      "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "7",
+      "when": 1793508228393,
+      "tag": "0050_shipment_incoterm",
+      "breakpoints": true
+    },
+    {
+      "idx": 51,
+      "version": "7",
+      "when": 1793516359128,
+      "tag": "0051_review_revision_requested",
+      "breakpoints": true
+    },
+    {
+      "idx": 52,
+      "version": "7",
+      "when": 1793516622034,
+      "tag": "0052_document_support_links",
+      "breakpoints": true
+    },
+    {
+      "idx": 53,
+      "version": "7",
+      "when": 1793521807117,
+      "tag": "0053_billing_qty_unit_container_size",
+      "breakpoints": true
+    },
+    {
+      "idx": 54,
+      "version": "7",
+      "when": 1793523540767,
+      "tag": "0054_vat_rates",
+      "breakpoints": true
+    },
+    {
+      "idx": 55,
+      "version": "7",
+      "when": 1793659219211,
+      "tag": "0055_workflow",
+      "breakpoints": true
+    }
+  ]
+}

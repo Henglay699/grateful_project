@@ -1,0 +1,339 @@
+/* Client Billing prints: the month pack (several A4 sheets), account statements, official
+   receipts (A5 landscape, two to an A4 sheet) and the handover checklist. Black on white. */
+
+.toolbar {
+  max-width: 210mm;
+  margin: 0 auto 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Helvetica', Arial, sans-serif;
+}
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #334155;
+}
+.toggles label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.toggles input {
+  accent-color: #0891b2;
+}
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+.pack > * + * {
+  margin-top: 18px;
+}
+.hint {
+  max-width: 210mm;
+  margin: 0 auto 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #fef3c7;
+  color: #92400e;
+  font:
+    700 12.5px/1.5 'Helvetica',
+    Arial,
+    sans-serif;
+}
+
+/* ---------- Account statement ---------- */
+/* Account statement body, like the Excel ST-INV / STA-DN sheets. */
+.stTitle {
+  text-align: center;
+  margin: 22px 0 4px;
+  font-size: 17pt;
+  font-weight: 700;
+  color: #000;
+}
+.stPeriod {
+  text-align: center;
+  font-size: 10.5pt;
+  font-weight: 700;
+  margin-bottom: 22px;
+  color: #000;
+}
+.billTo {
+  max-width: 62%;
+  margin-bottom: 18px;
+  font-size: 8pt;
+  line-height: 1.5;
+  color: #000;
+}
+.billTo b {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 9pt;
+}
+/* A box around the table; ruled heading cells; open rows. */
+.stTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  font-size: 8.5pt;
+  color: #000;
+}
+.stTable th {
+  border: 1px solid #000;
+  padding: 2px 4px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+}
+.stTable td {
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.stTable tbody tr:first-child td {
+  padding-top: 7px;
+}
+.stGap td {
+  height: 12px;
+}
+/* BALANCE AS SEP-2026: a thin rule above, a heavy one below. */
+.balanceRow td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-top: 1px solid #000;
+  border-bottom: 2.5px solid #000;
+  font-weight: 700;
+}
+.stPeriodCode {
+  margin-left: 6px;
+}
+/* The tax invoice's page margins (invoicePrint.module.css → .sheetInvoice). */
+.statementSheet {
+  padding: 10mm 8mm !important;
+}
+.r {
+  text-align: right;
+}
+.c {
+  text-align: center;
+}
+
+/* ---------- Official receipt: A5 landscape blocks, two per A4 sheet ---------- */
+.receiptSheet {
+  padding: 0 !important;
+}
+.receipt {
+  position: relative;
+  height: 148mm;
+  padding: 8mm 14mm 7mm;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 9pt;
+  color: #000;
+  overflow: hidden;
+}
+.receipt + .receipt {
+  border-top: 1px dashed #9ca3af;
+}
+.rcTitle {
+  /* A fixed width, centred: its right end (50% + 21mm) is where the client, amount and
+     payment lines below stop. */
+  width: 42mm;
+  margin: 8px auto 16px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 13pt;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Label · underlined field · (the date on the right), like the Excel sheet. The field column
+   runs from 34mm to the title's right end (30mm + 4mm gap + 50% - 13mm = 50% + 21mm). */
+.rcGrid {
+  display: grid;
+  grid-template-columns: 30mm calc(50% - 13mm) minmax(0, 1fr);
+  column-gap: 4mm;
+  row-gap: 11px;
+  align-items: end;
+}
+.rcLabel {
+  grid-column: 1;
+  white-space: nowrap;
+}
+.rcField {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  min-height: 16px;
+  padding: 0 2px 2px;
+  border-bottom: 1px solid #000;
+}
+.rcField::before {
+  content: ':';
+  margin-right: 4px;
+}
+/* "Date:" right beside its value, which ends where the full-width lines below end. The line
+   runs under both, from the start of "Date:" to the end of the date. */
+.rcSide .rcField {
+  width: 24mm;
+  justify-content: flex-end;
+  border-bottom: 0;
+}
+.rcSide .rcField::before {
+  content: none;
+}
+.rcSide {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 6px;
+  border-bottom: 1px solid #000;
+}
+.rcSide > span:first-child {
+  padding: 0 0 2px 2px;
+}
+/* As long as the "Received from" line above it; the figure ends under the title's end. */
+.rcAmount {
+  font-size: 10pt;
+}
+.rcAmount b + b {
+  margin-left: auto;
+}
+.rcWide {
+  grid-column: 2 / 4;
+}
+.rcShort {
+  max-width: 34mm;
+}
+.rcMethods {
+  gap: 18px;
+}
+.rcMethods > span {
+  display: inline-flex;
+  align-items: center;
+}
+.box {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-right: 6px;
+  border: 1px solid #000;
+  text-align: center;
+  font-size: 9px;
+  line-height: 10px;
+  font-weight: 700;
+}
+/* A rule across, then "Received by:" and the signature on the right. */
+.rcRule {
+  margin-top: 16px;
+  border-top: 1px solid #000;
+}
+/* The same signing space on both receipts, letterhead or not. */
+.rcSign {
+  margin-top: 8px;
+  height: 34mm;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-right: 14mm;
+}
+.rcSign > div:first-child {
+  margin-right: 6mm;
+}
+.rcSigned {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rcSignedBold {
+  font-weight: 700;
+}
+.void {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: rgba(220, 38, 38, 0.16);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ---------- Handover checklist ---------- */
+.clMeta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 20px;
+  margin: 6px 0 18px;
+  font-size: 12.5px;
+}
+.clMeta b {
+  font-weight: 700;
+}
+.clSubject {
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  font-weight: 700;
+}
+.clTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+.clTable th,
+.clTable td {
+  border: 1px solid #6b7280;
+  padding: 6px 8px;
+}
+.clTable th {
+  background: #fde68a;
+  font-weight: 700;
+  text-align: center;
+}
+.clTotal {
+  margin-top: 10px;
+  font-weight: 700;
+}
+.clSigns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 40px;
+  font-size: 11.5px;
+  line-height: 2.2;
+}
+.clSigns b {
+  display: block;
+  font-weight: 700;
+}
+.blank {
+  display: inline-block;
+  min-width: 55mm;
+  border-bottom: 1px solid #111827;
+}
+
+@media print {
+  .toolbar,
+  .hint {
+    display: none;
+  }
+  .pack > * + * {
+    margin-top: 0;
+    break-before: page;
+  }
+  /* Each sheet is exactly one page: no forced height, so nothing spills onto a blank page. */
+  .pack > * {
+    min-height: 0 !important;
+  }
+}

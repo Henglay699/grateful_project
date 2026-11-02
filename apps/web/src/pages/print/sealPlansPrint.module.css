@@ -1,0 +1,123 @@
+/* Seal Plans PDF: the sheet on A4 landscape, black on white regardless of the app theme. */
+.page {
+  min-height: 100vh;
+  background: #e5e7eb;
+  padding: 24px 12px 60px;
+  font-family: 'Helvetica', Arial, sans-serif;
+  color: #111827;
+}
+.toolbar {
+  max-width: 297mm;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toolbar b {
+  margin-right: auto;
+  font-size: 13px;
+}
+.btn {
+  font: 700 13px/1 inherit;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  cursor: pointer;
+}
+.btnPrimary {
+  composes: btn;
+  background: #0891b2;
+  border-color: #0891b2;
+  color: #fff;
+}
+.sheet {
+  width: 297mm;
+  min-height: 210mm;
+  margin: 0 auto;
+  padding: 10mm;
+  background: #fff;
+  box-shadow: 0 6px 30px rgba(15, 23, 42, 0.18);
+}
+.title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.period {
+  margin: 2px 0 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: #374151;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 6.6px;
+  line-height: 1.3;
+}
+.table th,
+.table td {
+  border: 0.5px solid #6b7280;
+  padding: 2px 3px;
+  text-align: center;
+  vertical-align: middle;
+}
+.table th {
+  background: #dbeafe;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+/* Repeat the header on every printed page. */
+.table thead {
+  display: table-header-group;
+}
+.table tr {
+  break-inside: avoid;
+}
+.month td {
+  background: #f3f4f6;
+  font-size: 7.5px;
+  font-weight: 800;
+  text-align: left;
+  letter-spacing: 0.4px;
+}
+.strong {
+  font-weight: 700;
+}
+.num {
+  white-space: nowrap;
+}
+.empty {
+  padding: 18px;
+  color: #6b7280;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+  .page {
+    padding: 0;
+    background: #fff;
+  }
+  .toolbar {
+    display: none;
+  }
+  .sheet {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .table th,
+  .month td {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

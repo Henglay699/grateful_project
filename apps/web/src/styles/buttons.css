@@ -1,0 +1,15 @@
+/*
+ * Every button on the site has 8px corners, not pills or circles. Loaded after
+ * the other global styles; !important so it also wins over each page's CSS module.
+ * Links that look like buttons are covered by their classes here (or in their own module).
+ */
+button,
+input:is([type='button'], [type='submit'], [type='reset']),
+[role='button'],
+.filter-btn,
+.new-shipment-btn,
+.btn-create-submit,
+.btn-cancel-shipment,
+.btn-delete-shipment {
+  border-radius: 8px !important;
+}

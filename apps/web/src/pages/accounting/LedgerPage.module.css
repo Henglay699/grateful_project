@@ -1,0 +1,99 @@
+/* Ledger: filters + actions, tiles, table. */
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.actions > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 8px;
+}
+.actions svg {
+  width: 15px;
+  height: 15px;
+}
+.export {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.export:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+/* Filter bar: plain row; search takes the free width. */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.divider {
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: var(--border-subtle);
+}
+/* Search takes the width left over in the row. */
+.filters .search {
+  flex: 1 1 160px;
+  min-width: 140px;
+}
+
+/* Fill the window exactly: the content area becomes a column, the ledger card takes the
+   height left under the tabs, and only the table scrolls (no page scrollbar). Small
+   screens keep normal page scrolling. */
+@media (min-width: 900px) and (min-height: 600px) {
+  :global(.content):has(> .fill) {
+    display: flex;
+    flex-direction: column;
+  }
+  :global(.view.active).fill {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .fill > :global(.card) {
+    padding: 16px 20px 14px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .tableScroll {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+  }
+}
+/* Long marks stay on one line (full text on hover). */
+.mark {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Keep the Total row in view while the rows scroll under it. */
+.tableScroll tbody tr:last-child td {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 -1px 0 0 var(--border-subtle);
+}
+
+@media (max-width: 640px) {
+  .divider {
+    display: none;
+  }
+}

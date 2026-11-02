@@ -1,0 +1,273 @@
+/* Small shared UI pieces the static prototype didn't need (built from its tokens). */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(7, 13, 18, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.dialog {
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+}
+.dialogHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.dialogTitle {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+.dialogSub {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.close:hover {
+  color: var(--text-primary);
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.pagerInfo {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.pagerCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.pagerRows {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.pagerSelect {
+  height: 30px;
+  padding-left: 12px;
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.pagerInput {
+  width: 72px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.pagerBtns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.alert {
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  background: var(--status-exception-bg);
+  color: var(--status-exception-fg);
+  margin-bottom: 14px;
+}
+.alert ul {
+  margin: 6px 0 0 18px;
+  font-weight: 600;
+}
+.notice {
+  composes: alert;
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+}
+.info {
+  composes: alert;
+  background: var(--status-progress-bg);
+  color: var(--status-progress-fg);
+}
+
+.fieldError {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--status-exception-fg);
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-tertiary);
+  padding: 28px 12px !important;
+  font-size: 13px;
+}
+.skeletonRow td {
+  padding: 14px 12px !important;
+}
+.skeleton {
+  height: 12px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* In a card header the toolbar takes the width beside the title, right-aligned, and
+   dropdowns don't stretch to their longest option, so the row stays on one line. */
+:global(.card-header-row) > .toolbar {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+}
+.toolbar > select {
+  max-width: 180px;
+  text-overflow: ellipsis;
+}
+.toolbar > button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.input {
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 12px;
+  outline: none;
+}
+.input:focus {
+  border-color: var(--accent-primary);
+}
+.ghostBtn {
+  composes: input;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+}
+.ghostBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.ghostBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dangerBtn {
+  composes: ghostBtn;
+  color: var(--status-exception-fg);
+}
+.expandToggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.expandToggle:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.expandToggle svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s ease;
+}
+.expandToggle[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+/* A warning the user can act on (e.g. "already attached — upload anyway"). */
+.warnBox {
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.linkBtn {
+  display: inline;
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}

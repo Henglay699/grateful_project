@@ -1,0 +1,149 @@
+/* Document editor → Line items: the item table and the totals panel under it. */
+
+.wrap {
+  margin-top: 4px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-main);
+}
+.table th {
+  padding: 10px 8px;
+  background: var(--bg-surface-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+.table th.num {
+  text-align: right;
+}
+.table td {
+  padding: 10px 8px;
+  vertical-align: top;
+}
+.table tbody tr + tr td {
+  border-top: 1px solid var(--border-subtle);
+}
+.table th:first-child,
+.table td:first-child {
+  padding-left: 16px;
+}
+.table th:last-child,
+.table td:last-child {
+  padding-right: 12px;
+}
+
+/* Row number: a small round badge. */
+.no {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.table input {
+  width: 100%;
+  min-width: 0;
+}
+/* Quantities and prices line up on the right, like the figures beside them. */
+.table input.numIn {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A calculated figure: a read-only box the same height as the inputs. */
+.calc {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 96px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface-elevated);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.calcStrong {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Under the table: "+ Add line" on the left, the totals panel on the right. */
+.foot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.totals {
+  width: 340px;
+  max-width: 100%;
+  margin-left: auto;
+  padding: 14px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface-elevated);
+  font-variant-numeric: tabular-nums;
+}
+.totals > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.totals > div b {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.grand {
+  margin-top: 6px;
+  padding-top: 10px !important;
+  border-top: 1px solid var(--border-subtle);
+}
+.grand span {
+  font-weight: 700;
+  color: var(--text-primary) !important;
+}
+.grand b {
+  font-size: 20px;
+  font-weight: 700 !important;
+  letter-spacing: -0.4px;
+  color: var(--accent-primary) !important;
+}
+.riel {
+  font-size: 12px !important;
+  color: var(--text-tertiary) !important;
+}
+.riel b {
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+}

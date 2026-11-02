@@ -1,0 +1,16 @@
+/* Analytics → Most Common Forwarders: summary pill and the funnel. */
+.pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--status-completed-bg);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  white-space: nowrap;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 6px;
+}

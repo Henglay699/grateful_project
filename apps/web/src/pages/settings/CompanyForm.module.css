@@ -1,0 +1,348 @@
+/* Settings → Company: header, three labelled sections, Save bar. Full width of the page. */
+.card {
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+}
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+/* The pencil that unlocks the form, top right. */
+.editBtn {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.editBtn svg {
+  width: 16px;
+  height: 16px;
+}
+.editBtn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.editBtn:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+.head h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.head p {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+/* Read-only until the pencil is clicked: the values read normally, not greyed out. */
+.viewing :global(.form-field-box):disabled {
+  opacity: 1;
+  cursor: default;
+}
+.viewing .textarea {
+  resize: none;
+}
+
+/* One section: what it is on the left, its fields on the right. */
+.section {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 40px;
+  padding: 28px;
+}
+.section + .section {
+  border-top: 1px solid var(--border-subtle);
+}
+/* Title row: the icon chip (shared .cx-title-icon) beside the heading. */
+.headTitle,
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.headTitle {
+  align-items: flex-start;
+  gap: 14px;
+}
+.headIcon {
+  width: 40px !important;
+  height: 40px !important;
+}
+.headIcon svg {
+  width: 20px;
+  height: 20px;
+}
+.sectionHead p {
+  padding-left: 46px;
+}
+.sectionHead h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.sectionHead p {
+  margin: 8px 0 0;
+  max-width: 280px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  align-content: start;
+}
+.fields[data-cols='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+/* Bank accounts: stacked, each under an underlined "Account n" heading, Add button below. */
+.fields[data-cols='list'] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+.bankHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  position: relative;
+}
+/* A short accent underline, as wide as the Bank column. */
+.bankHead::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: calc((100% - 48px) / 3);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-primary);
+}
+.bankNo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.bankTag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--status-completed-bg);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+.bankRemove {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.bankRemove:hover {
+  border-color: var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--status-error, #dc2626);
+}
+/* Follows the locked fieldset rather than a section, so it draws its own divider. */
+.bankSection {
+  border-top: 1px solid var(--border-subtle);
+}
+/* Show all / Show less, top right of the first account. */
+.bankToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--bg-surface);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.bankToggle:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.bankToggle svg {
+  transition: transform 0.15s ease;
+}
+.chevronUp {
+  transform: rotate(180deg);
+}
+.bankToggle + .bankRemove {
+  margin-left: 0;
+}
+.bankFields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 24px;
+}
+.addBank {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px dashed var(--accent-primary);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  cursor: pointer;
+}
+.addBank:hover {
+  background: var(--status-completed-bg);
+}
+.empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.full {
+  grid-column: 1 / -1;
+}
+/* Fixed line boxes, so a Khmer label or box (taller glyphs) lines up with its English twin. */
+.field > label {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  overflow: visible;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+.field :global(.form-field-box) {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  margin: 0;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.field .textarea {
+  display: block;
+  height: 76px;
+  min-height: 76px;
+  padding: 12px 14px;
+  font-family: var(--font-main);
+  line-height: 22px;
+  resize: vertical;
+}
+.khmer {
+  font-family: 'GS Khmer', var(--font-main) !important;
+}
+
+/* Save bar: stays at the bottom of the window while the form scrolls. */
+.foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 28px;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0 0 8px 8px;
+  background: var(--bg-subtle);
+}
+.status {
+  margin-right: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1280px) {
+  .section {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 28px;
+  }
+  .fields[data-cols='3'],
+  .bankFields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bankHead::after {
+    width: calc((100% - 24px) / 2);
+  }
+}
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .sectionHead p {
+    max-width: none;
+    padding-left: 0;
+  }
+}
+@media (max-width: 600px) {
+  .fields,
+  .fields[data-cols='3'],
+  .bankFields {
+    grid-template-columns: 1fr;
+  }
+  .bankHead::after {
+    width: 120px;
+  }
+  .section,
+  .head,
+  .foot {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

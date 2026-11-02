@@ -1,0 +1,197 @@
+/* Ask AI attachments: the + button, file chips, and the drop overlay. */
+
+/* The input box wraps so pending files sit on their own row above the text. */
+.form {
+  flex-wrap: wrap;
+  padding-left: 8px;
+}
+.pending {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 2px 0 4px 2px;
+}
+
+/* ".form" raises specificity over ".ai-input button" (the cyan send circle). */
+.form .attach {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.form .attach:hover:not(:disabled) {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
+}
+.form .attach svg {
+  width: 16px;
+  height: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 5px 6px 5px 5px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  text-align: left;
+}
+.thumb,
+.badge {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+.thumb {
+  object-fit: cover;
+  display: block;
+}
+.badge {
+  display: grid;
+  place-items: center;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #fff;
+}
+.chip[data-kind='pdf'] .badge {
+  background: #dc2626;
+}
+.chip[data-kind='word'] .badge {
+  background: #2563eb;
+}
+.chip[data-kind='excel'] .badge {
+  background: #16a34a;
+}
+.chipText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.chipName {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.chipSize {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.form .remove {
+  width: 22px;
+  height: 22px;
+  margin-left: 2px;
+  background: transparent;
+  color: var(--text-tertiary);
+}
+.form .remove:hover {
+  background: var(--bg-subtle);
+  color: var(--status-exception-fg);
+}
+.form .remove svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Files shown on a sent question, above its text. */
+.sentFiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.fileNote {
+  margin: 6px 14px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--status-exception-fg);
+}
+
+/* Shown while files are dragged over the panel. */
+.dropZone {
+  position: absolute;
+  inset: 12px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  border: 2px dashed var(--accent-primary);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--accent-primary);
+  pointer-events: none;
+}
+
+/* Suggested questions: "Other questions" picks a new set. */
+.moreQuestions {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--accent-primary);
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.moreQuestions:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+.moreQuestions:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Follow-up questions under the latest answer. */
+.followUps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  max-width: 92%;
+}
+.followLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.followUps button {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, var(--border-subtle));
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.followUps button:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.followUps button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

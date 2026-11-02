@@ -1,0 +1,1 @@
+ALTER TABLE "clients" ADD COLUMN "address_km" text;

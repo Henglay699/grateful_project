@@ -1,0 +1,133 @@
+/* Reports → Payroll */
+.iconBtn {
+  background: none;
+  border: none;
+  padding: 4px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.iconBtn:hover {
+  color: var(--status-exception-fg);
+}
+.dialogField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.dialogField > span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+.savedNote {
+  color: var(--status-completed-fg);
+  font-weight: 700;
+}
+.views {
+  display: flex;
+  gap: 6px;
+  margin-right: 6px;
+}
+.sub {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 1100px) {
+  .grid2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.total td {
+  font-weight: 700;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-strong);
+  background: var(--bg-subtle);
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.muted {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.kh {
+  font-family: var(--font-main);
+}
+.pick {
+  cursor: pointer;
+}
+.bar {
+  display: block;
+  height: 8px;
+  min-width: 2px;
+  border-radius: 4px;
+  background: var(--accent-primary);
+}
+.issues {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+  font-size: 12.5px;
+}
+.issues h4 {
+  font-size: 12.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.issues ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.scrollX {
+  overflow-x: auto;
+}
+/* Staff list: sticky header inside its own scroll box. */
+.scroll {
+  overflow: auto;
+  max-height: 75vh;
+}
+.scroll th,
+.scroll td {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.scroll td {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+.scroll th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 1px 0 0 var(--border-subtle);
+  white-space: nowrap;
+}
+.scroll td {
+  white-space: nowrap;
+}
+.scroll tfoot td {
+  position: sticky;
+  bottom: 0;
+}

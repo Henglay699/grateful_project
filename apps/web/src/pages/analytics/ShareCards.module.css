@@ -1,0 +1,298 @@
+/* Analytics → Import vs Export Share and Customs Clearance Status. */
+
+/* ---------- Shared bits ---------- */
+.dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+.pill {
+  --tone: var(--accent-primary);
+  justify-self: start;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--tone) 80%, var(--text-primary));
+  white-space: nowrap;
+}
+.pill[data-warn] {
+  --tone: var(--accent-amber);
+}
+.miniHead {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+/* Hover focus: everything but the hovered part fades back. */
+.flowBody [data-dim],
+.clearBody [data-dim] {
+  opacity: 0.35;
+}
+
+/* Thin bar of rounded segments, each growing in from the left. */
+.segBar {
+  display: flex;
+  gap: 3px;
+  height: 10px;
+}
+.seg {
+  min-width: 4px;
+  border-radius: 999px;
+  transform-origin: left center;
+  animation: grow 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: opacity 0.2s ease;
+  cursor: default;
+}
+
+/* ---------- Import vs Export ---------- */
+.flowBody {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 180px;
+}
+.ringWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 156px;
+  height: 156px;
+}
+.ring {
+  display: block;
+}
+.arc {
+  animation: draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    opacity 0.2s ease,
+    stroke-width 0.2s ease;
+  cursor: pointer;
+}
+.ringCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.ringValue {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.ringLabel {
+  margin-top: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.flowSide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.tile {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  transition: border-color 0.2s ease;
+  cursor: default;
+}
+.tile[data-active] {
+  border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+}
+.tileHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.tileValue {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.modes {
+  display: grid;
+  gap: 10px;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: opacity 0.2s ease;
+  cursor: default;
+}
+.legendItem b {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.legendItem small {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-tertiary);
+}
+
+/* ---------- Customs clearance ---------- */
+.clearBody {
+  display: grid;
+  gap: 16px;
+  min-height: 180px;
+}
+.headline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bigValue {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-primary);
+}
+.headlineText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-right: auto;
+}
+.headlineText b {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+.headlineText span {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.status {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+  cursor: default;
+}
+.status[data-active] {
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  background: color-mix(in srgb, var(--accent-primary) 5%, transparent);
+}
+.status[data-zero]:not([data-dim]) {
+  opacity: 0.6;
+}
+.statusHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.statusNums {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.statusNums b {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+.statusNums small {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.track {
+  grid-column: 1 / -1;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+}
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transform-origin: left center;
+  animation: grow 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dasharray: 0 var(--c);
+  }
+}
+
+@media (max-width: 720px) {
+  .flowBody {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ringWrap {
+    align-self: center;
+  }
+}
+@media (max-width: 480px) {
+  .tiles,
+  .statusGrid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seg,
+  .arc,
+  .fill {
+    animation: none;
+  }
+}

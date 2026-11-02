@@ -1,0 +1,364 @@
+/* Analytics → Shipments by country: world map beside a ranked country list. */
+.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.frame {
+  position: relative;
+  height: 460px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #7c7c77;
+}
+.frame[data-full] {
+  height: 100vh;
+  border: 0;
+  border-radius: 0;
+}
+.map {
+  position: absolute;
+  inset: 0;
+  /* The sea; countries are drawn white on top. */
+  background: #7c7c77;
+  font: inherit;
+}
+
+/* Map / Satellite switch, top left. */
+.base {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  padding: 3px;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18);
+}
+.base button {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.base button[aria-pressed='true'] {
+  background: var(--accent-primary);
+  color: #fff;
+}
+.base button:not([aria-pressed='true']):hover {
+  color: var(--text-primary);
+}
+
+/* Full screen and show-all, top right. */
+.tools {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tools button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18);
+  cursor: pointer;
+}
+.tools button:hover {
+  color: var(--text-primary);
+}
+.tools svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Leaflet's own zoom buttons, restyled like the tools. */
+.map :global(.leaflet-control-zoom) {
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18);
+}
+.map :global(.leaflet-control-zoom a) {
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+.map :global(.leaflet-control-zoom a:hover) {
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+}
+.map :global(.leaflet-control-attribution) {
+  font-size: 10px;
+  background: color-mix(in srgb, var(--bg-surface) 80%, transparent);
+  color: var(--text-tertiary);
+}
+.map :global(.leaflet-control-attribution a) {
+  color: var(--text-secondary);
+}
+
+/* Pins and clusters (Leaflet divIcons). */
+.pinWrap {
+  background: none;
+  border: 0;
+}
+.pin {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--bg-surface);
+  border: 3px solid #0e7490;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.35);
+  transition: transform 0.15s ease;
+}
+.pin[data-top='true'] {
+  background: #22d3ee;
+  border-color: #0e7490;
+}
+.pin span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: rotate(45deg);
+  font-size: 12px;
+  font-weight: 800;
+  color: #0e7490;
+}
+.pin[data-top='true'] span {
+  color: #083344;
+}
+.pinWrap:hover .pin,
+.pinWrap:focus-visible .pin {
+  transform: rotate(-45deg) scale(1.12);
+}
+.cluster {
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #0e7490;
+  box-shadow:
+    0 0 0 5px rgb(34 211 238 / 0.3),
+    0 3px 8px rgb(0 0 0 / 0.3);
+  font-size: 13px;
+  font-weight: 800;
+  color: #0e7490;
+  transition: transform 0.15s ease;
+}
+.pinWrap:hover .cluster {
+  transform: scale(1.08);
+}
+
+/* Hover tooltip and click popup. */
+.tip:global(.leaflet-tooltip) {
+  padding: 5px 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface-elevated, var(--bg-surface));
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
+}
+.tip b {
+  color: var(--text-primary);
+}
+.tip:global(.leaflet-tooltip)::before {
+  display: none;
+}
+.popup :global(.leaflet-popup-content-wrapper) {
+  border-radius: 10px;
+  background: var(--bg-surface-elevated, var(--bg-surface));
+  color: var(--text-primary);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+}
+.popup :global(.leaflet-popup-tip) {
+  background: var(--bg-surface-elevated, var(--bg-surface));
+}
+.popup :global(.leaflet-popup-content) {
+  margin: 14px 16px;
+  font: inherit;
+}
+.popup :global(a.leaflet-popup-close-button) {
+  color: var(--text-tertiary);
+}
+.pop {
+  min-width: 190px;
+}
+.popHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 14px;
+  font-size: 14px;
+}
+.popHead small {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.popFig {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.popFig b {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.popSub {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.popBar {
+  height: 5px;
+  margin-top: 10px;
+  border-radius: 4px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+.popBar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: #22d3ee;
+}
+
+span.flag {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 21px;
+  height: 14px;
+  border-radius: 2px;
+  background-size: cover;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12);
+}
+
+/* Ranked list beside the map: click a country to fly to it. */
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 460px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.list button {
+  display: grid;
+  grid-template-columns: 18px 21px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 6px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.list button:hover:not(:disabled) {
+  background: var(--bg-subtle);
+}
+.list button[data-on] {
+  border-color: #22d3ee;
+  background: color-mix(in srgb, #22d3ee 10%, transparent);
+}
+.list button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.rank {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.val {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+.val b {
+  margin-right: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.bar {
+  grid-column: 2 / -1;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: #22d3ee;
+}
+.note {
+  padding: 8px 10px;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+  .frame {
+    height: 360px;
+  }
+  .list {
+    max-height: none;
+  }
+}
